@@ -13,7 +13,11 @@
 	else
 	{
 		$stmt = $conn->prepare("select Name from Contacts where Name like ? and UserID=?");
+<<<<<<<< HEAD:LAMPAPI/SearchContacts.php
 		$colorName = "%" . $inData["search"] . "%";
+========
+		$contactName = "%" . $inData["search"] . "%";
+>>>>>>>> 4aae53f (Updated AddContact, SearchContact, and DeleteContact (WIP)):LAMPAPI/SearchContact.php
 		$stmt->bind_param("ss", $contactName, $inData["userId"]);
 		$stmt->execute();
 		
@@ -65,5 +69,8 @@
 		sendResultInfoAsJson( $retValue );
 	}
 	
+<<<<<<<< HEAD:LAMPAPI/SearchContacts.php
 
+========
+>>>>>>>> 4aae53f (Updated AddContact, SearchContact, and DeleteContact (WIP)):LAMPAPI/SearchContact.php
 ?>

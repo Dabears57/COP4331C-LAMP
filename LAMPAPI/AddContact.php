@@ -11,7 +11,15 @@
 	} 
 	else
 	{
+<<<<<<< HEAD
+<<<<<<<< HEAD:LAMPAPI/AddContact.php
 		$stmt = $conn->prepare("INSERT into Contacts (UserId,Name) VALUES(?,?)");
+========
+		$stmt = $conn->prepare("DELETE FROM Contacts WHERE UserId=$userId");
+>>>>>>>> 4aae53f (Updated AddContact, SearchContact, and DeleteContact (WIP)):LAMPAPI/DeleteContact.php
+=======
+		$stmt = $conn->prepare("INSERT into Contacts (UserId,Name) VALUES(?,?)");
+>>>>>>> 4aae53f (Updated AddContact, SearchContact, and DeleteContact (WIP))
 		$stmt->bind_param("ss", $userId, $contact);
 		$stmt->execute();
 		$stmt->close();
@@ -36,5 +44,11 @@
 		sendResultInfoAsJson( $retValue );
 	}
 	
+<<<<<<< HEAD
+<<<<<<<< HEAD:LAMPAPI/AddContact.php
 
+========
+>>>>>>>> 4aae53f (Updated AddContact, SearchContact, and DeleteContact (WIP)):LAMPAPI/DeleteContact.php
+=======
+>>>>>>> 4aae53f (Updated AddContact, SearchContact, and DeleteContact (WIP))
 ?>
