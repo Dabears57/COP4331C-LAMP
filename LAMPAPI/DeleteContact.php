@@ -3,10 +3,6 @@
 	$raw = file_get_contents("php://input");
 	$inData = json_decode($raw, true);
 
-	// Optional DEBUG (uncomment to see raw input)
-	// returnWithError("RAW=" . $raw);
-	// exit;
-
 	// Validate JSON parsing
 	if ($inData === null)
 	{
@@ -31,6 +27,7 @@
 		exit;
 	}
 
+    // The contact is deleted only if it belongs to the given user
 	$stmt = $conn->prepare(
 		"UPDATE Contacts
 		 SET DeletedAt = CURRENT_TIMESTAMP
