@@ -1,55 +1,56 @@
 <?php
-	$inData = getRequestInfo();
+	// Read raw request body once
+	$raw = file_get_contents("php://input");
+	$inData = json_decode($raw, true);
 
-    $raw = file_get_contents("php://input");
-    returnWithError("RAW=" . $raw);
-    exit;
+	// Optional DEBUG (uncomment to see raw input)
+	// returnWithError("RAW=" . $raw);
+	// exit;
 
-    if (!isset($contactId) || !isset($userId))
-    {
-        returnWithError("Missing contactId or userId");
-        exit;
-    }
+	// Validate JSON parsing
+	if ($inData === null)
+	{
+		returnWithError("Invalid JSON: " . json_last_error_msg());
+		exit;
+	}
 
-	$contactId = $inData["contactId"];
-	$userId    = $inData["userId"];
+	// Validate required fields exist
+	if (!isset($inData["contactId"]) || !isset($inData["userId"]))
+	{
+		returnWithError("Missing contactId or userId");
+		exit;
+	}
+
+	$contactId = (int)$inData["contactId"];
+	$userId    = (int)$inData["userId"];
 
 	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
 	if ($conn->connect_error)
 	{
 		returnWithError($conn->connect_error);
+		exit;
+	}
+
+	$stmt = $conn->prepare(
+		"UPDATE Contacts
+		 SET DeletedAt = CURRENT_TIMESTAMP
+		 WHERE ID=? AND UserID=? AND DeletedAt IS NULL"
+	);
+
+	$stmt->bind_param("ii", $contactId, $userId);
+	$stmt->execute();
+
+	if ($stmt->affected_rows > 0)
+	{
+		returnWithError("");
 	}
 	else
 	{
-        // The contact is deleted only if it belongs to the given user
-		$stmt = $conn->prepare(
-			"UPDATE Contacts
-			 SET DeletedAt = CURRENT_TIMESTAMP
-			 WHERE ID=? AND UserID=? AND DeletedAt IS NULL"
-		);
-
-		$stmt->bind_param("ii", $contactId, $userId);
-		$stmt->execute();
-
-		if ($stmt->affected_rows > 0)
-        {
-			returnWithError("");
-        }
-		else
-        {
-            returnWithError("Delete failed: record not found.");
-        }
-
-		$stmt->close();
-		$conn->close();
+		returnWithError("Delete failed: record not found or already deleted.");
 	}
 
-	function getRequestInfo()
-    {
-        $data = file_get_contents("php://input");
-        return json_decode($data, true);
-    }
-
+	$stmt->close();
+	$conn->close();
 
 	function sendResultInfoAsJson($obj)
 	{
