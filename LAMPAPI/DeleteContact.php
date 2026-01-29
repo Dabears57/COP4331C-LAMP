@@ -1,6 +1,9 @@
 <?php
 	$inData = getRequestInfo();
 
+    returnWithError(json_encode($inData));
+    exit;
+
     if (!isset($contactId) || !isset($userId))
     {
         returnWithError("Missing contactId or userId");
@@ -41,9 +44,11 @@
 	}
 
 	function getRequestInfo()
-	{
-		return json_decode(file_get_contents('php://input'), true);
-	}
+    {
+        $data = file_get_contents("php://input");
+        return json_decode($data, true);
+    }
+
 
 	function sendResultInfoAsJson($obj)
 	{
