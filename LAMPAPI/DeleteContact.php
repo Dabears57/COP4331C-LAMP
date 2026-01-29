@@ -1,6 +1,12 @@
 <?php
 	$inData = getRequestInfo();
 
+    if (!isset($contactId) || !isset($userId))
+    {
+        returnWithError("Missing contactId or userId");
+        exit;
+    }
+
 	$contactId = $inData["contactId"];
 	$userId    = $inData["userId"];
 
@@ -22,13 +28,13 @@
 		$stmt->execute();
 
 		if ($stmt->affected_rows > 0)
+        {
 			returnWithError("");
+        }
 		else
-            returnWithError(
-                "contactId=" . var_export($contactId, true) .
-                ", userId=" . var_export($userId, true)
-            );
-          
+        {
+            returnWithError("Delete failed: record not found.");
+        }
 
 		$stmt->close();
 		$conn->close();
