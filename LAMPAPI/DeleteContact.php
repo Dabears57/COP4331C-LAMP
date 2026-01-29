@@ -1,7 +1,8 @@
 <?php
 	$inData = getRequestInfo();
 
-    returnWithError(json_encode($inData));
+    $raw = file_get_contents("php://input");
+    returnWithError("RAW=" . $raw);
     exit;
 
     if (!isset($contactId) || !isset($userId))
