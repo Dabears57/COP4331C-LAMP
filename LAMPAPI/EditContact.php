@@ -1,37 +1,53 @@
 <?php
-
 	$inData = getRequestInfo();
-	
-	$oldContact = $inData["oldContact"];
-	$newContact = $inData["newContact"];
-	$userId = $inData["userId"];
+
+	$contactId = $inData["contactId"];
+	$userId    = $inData["userId"];
+	$firstName = $inData["firstName"];
+	$lastName  = $inData["lastName"];
+	$phone     = $inData["phone"];
+	$email     = $inData["email"];
+	$company   = $inData["company"];
+	$address   = $inData["address"];
+	$note      = $inData["note"];
 
 	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
-	if ($conn->connect_error) 
+	if ($conn->connect_error)
 	{
 		returnWithError($conn->connect_error);
-	} 
+	}
 	else
 	{
-        // Ensures the contact belongs to the logged-in user
-		$stmt = $conn->prepare("UPDATE Contacts SET Name=? WHERE UserId=? AND Name=?");
+         // Ensures the contact belongs to the logged-in user
+		$stmt = $conn->prepare(
+			"UPDATE Contacts
+			 SET FirstName=?, LastName=?, Phone=?, Email=?, Company=?, Address=?, Note=?
+			 WHERE ID=? AND UserID=? AND DeletedAt IS NULL"
+		);
 
-        // Bind new name, user ID, and old name to the SQL statement
-		$stmt->bind_param("sss", $newContact, $userId, $oldContact);
+        // Bind the changes
+		$stmt->bind_param(
+			"sssssssii",
+			$firstName,
+			$lastName,
+			$phone,
+			$email,
+			$company,
+			$address,
+			$note,
+			$contactId,
+			$userId
+		);
+
 		$stmt->execute();
 
-        if ($stmt->affected_rows > 0)
-		{
+		if ($stmt->affected_rows > 0)
 			returnWithError("");
-		}
 		else
-		{
-			returnWithError("Update failed: Record not found or no changes made.");
-		}
+			returnWithError("Update failed: record not found or no changes made.");
 
 		$stmt->close();
 		$conn->close();
-		returnWithError("");
 	}
 
 	function getRequestInfo()
@@ -41,13 +57,12 @@
 
 	function sendResultInfoAsJson($obj)
 	{
-		header('Content-type: application/json');
+		header("Content-type: application/json");
 		echo $obj;
 	}
-	
+
 	function returnWithError($err)
 	{
-		$retValue = '{"error":"' . $err . '"}';
-		sendResultInfoAsJson($retValue);
+		sendResultInfoAsJson('{"error":"' . $err . '"}');
 	}
 ?>
