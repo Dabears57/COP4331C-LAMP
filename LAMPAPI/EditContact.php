@@ -41,10 +41,19 @@
 
 		$stmt->execute();
 
-		if ($stmt->affected_rows > 0)
-			returnWithError("");
-		else
-			returnWithError("Update failed: record not found or no changes made.");
+        if ($stmt->affected_rows > 0)
+        {
+            returnWithError("");
+        }
+        else if ($stmt->errno === 0)
+        {
+            // Query succeeded but data was identical
+            returnWithError("");
+        }
+        else
+        {
+            returnWithError("Update failed.");
+        }
 
 		$stmt->close();
 		$conn->close();
