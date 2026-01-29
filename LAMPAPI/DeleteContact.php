@@ -24,7 +24,11 @@
 		if ($stmt->affected_rows > 0)
 			returnWithError("");
 		else
-			returnWithError("Delete failed: record not found.");
+            returnWithError(
+                "contactId=" . var_export($contactId, true) .
+                ", userId=" . var_export($userId, true)
+            );
+          
 
 		$stmt->close();
 		$conn->close();
