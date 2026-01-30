@@ -466,3 +466,14 @@ select {
     font-family: 'Ubuntu', sans-serif;
     color: var(--color-error);
 }
+
+/* Mobile Optimization */
+@media screen and (max-width: 600px) {
+    .auth-card {
+        padding: 20px; /* Reduces padding from 40px to 20px on phones */
+    }
+    
+    .auth-container {
+        padding: 10px;
+    }
+}
