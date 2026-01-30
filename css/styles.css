@@ -468,12 +468,17 @@ select {
 }
 
 /* Mobile Optimization */
+/* Mobile Optimization */
 @media screen and (max-width: 600px) {
+    /* 1. Make the card fit the screen width */
     .auth-card {
-        padding: 20px; /* Reduces padding from 40px to 20px on phones */
+        width: 90%;       /* Sets width to 90% of screen */
+        margin: 0 auto;   /* Centers it */
+        padding: 20px;    /* Reduces internal spacing */
     }
-    
-    .auth-container {
-        padding: 10px;
+
+    /* 2. Slightly shrink the big title so it doesn't wrap weirdly */
+    .auth-card__title {
+        font-size: 32px; 
     }
 }
