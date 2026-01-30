@@ -11,7 +11,7 @@
     /* Background Colors */
     --color-bg-dark: #242027;           /* Darkest - main background */
     --color-bg-medium: #2c2a3d;         /* Medium - cards, panels */
-    --color-bg-light: #353c5f;          /* Lightest - top bar, borders */
+    --color-bg-light: #2c2a3d;          /* Lightest - top bar, borders */
     
     /* Text Colors */
     --color-text-primary: #dae4ff;      /* Main text (white) */
@@ -171,7 +171,7 @@ body
     padding: var(--topbar-padding);
     box-sizing: border-box;
     z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
 }
 
 .top-bar__content {
