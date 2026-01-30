@@ -11,11 +11,11 @@
 	else
 	{
 		$stmt = $conn->prepare("INSERT INTO Users (FirstName, LastName, Login, Password) VALUES (?,?,?,?)");
-		$stmt->bind_param("ssss",  $inData["firstName"],  $inData["lastName"], $inData["login"], $inData["password"]);
+		$stmt->bind_param("ssss",  $inData["FirstName"],  $inData["LastName"], $inData["Login"], $inData["Password"]);
 
 		if($stmt->execute())
 		{
-			returnWithInfo( $inData["firstName"], $inData["lastName"], $inData["login"] );
+			returnWithInfo( $inData["FirstName"], $inData["LastName"], $inData["Login"] );
 		}
 		else
 		{
@@ -45,7 +45,7 @@
 	
 	function returnWithInfo( $firstName, $lastName, $login )
 	{
-		$retValue = '{"username":"' . $login . '","firstName":"' . $firstName . '","lastName":"' . $lastName . '","error":""}';
+		$retValue = '{"Login":"' . $login . '","FirstName":"' . $firstName . '","LastName":"' . $lastName . '","error":""}';
 		sendResultInfoAsJson( $retValue );
 	}
 	
