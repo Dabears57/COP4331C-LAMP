@@ -97,9 +97,9 @@ function doLogin()
 			if (this.readyState == 4 && this.status == 200) 
 			{
 				let jsonObject = JSON.parse(xhr.responseText);
-				userId = jsonObject.ID;
+				userId = jsonObject.id;
 		
-				if (userId < 0)
+				if (userId < 1)
 				{		
 					document.getElementById("loginResult").innerHTML = "Invalid username or password";
 					return;
