@@ -1,3 +1,6 @@
+// Global variable to store the contacts data in an array 
+let contactsData = [];
+
 // Function to load the page and search for contacts. Called on initial page load 
 function loadPage() 
 {
@@ -20,14 +23,13 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-// Function to search for contacts / load the contacts into the table
+// Partially refactored by Cursor 
+// Fetches data from API, stores in contactsData, and calls renderTable()
 // A semi-substantial part of function was written / assisted by Cursor
 function searchContacts()
 {
-    
     // Get the search text from the search input field
     let srch = document.getElementById("searchText").value;
-	let contactList = "";
 	
 	// Clear previous result messages
 	document.getElementById("contactSearchResult").innerHTML = "";
@@ -60,34 +62,20 @@ function searchContacts()
                 
                 // Check if results exist and handle empty results
                 if (!results || results.length === 0) {
-                    document.getElementById("contactTableBody").innerHTML = "<tr><td colspan='6'>No contacts found</td></tr>";
+                    contactsData = [];
+                    renderTable(contactsData);
                     document.getElementById("contactSearchResult").innerHTML = "0 contact(s) loaded";
                     return;
                 }
                 
-                // Loop through the results
-                for( let i=0; i<results.length; i++ )
-                {
-                    // Build the row with escaped HTML to prevent XSS
-                    contactList += "<tr>";
-                    contactList += "<td>" + escapeHtml(results[i].FirstName) + "</td>";
-                    contactList += "<td>" + escapeHtml(results[i].LastName) + "</td>";
-                    contactList += "<td>" + escapeHtml(results[i].Phone) + "</td>";
-                    contactList += "<td>" + escapeHtml(results[i].Email) + "</td>";
-                    
-                    // Add Edit/Delete Buttons (passing the specific Contact ID to them)
-                    contactList += '<td><button onclick="openEditModal(\'' + results[i].ID + '\', this)">Edit</button></td>';
-                    contactList += '<td><button onclick="deleteContact(\'' + results[i].ID + '\')">Delete</button></td>';
-                    
-                    // Close the row
-                    contactList += "</tr>";
-                }
+                // Store the results in the global contactsData array
+                contactsData = results;
                 
-                // Display the contact list
-                document.getElementById("contactTableBody").innerHTML = contactList;
+                // Render the table with the fetched data
+                renderTable(contactsData);
                 
                 // Display success message with count
-                document.getElementById("contactSearchResult").innerHTML = results.length + " contact(s) loaded";
+                document.getElementById("contactSearchResult").innerHTML = contactsData.length + " contact(s) loaded";
 			}
 		};
         // Send the request to the API
@@ -101,6 +89,58 @@ function searchContacts()
 	}
 }
 
+// Written by Cursor as part of a refactor 
+// Function to render the contacts table from an array of contact data
+// Takes any array of contact objects and generates HTML table rows
+function renderTable(data)
+{
+    let contactList = "";
+    
+    // Check if data exists and handle empty array
+    if (!data || data.length === 0) {
+        document.getElementById("contactTableBody").innerHTML = "<tr><td colspan='6'>No contacts found</td></tr>";
+        return;
+    }
+    
+    // Loop through the data array
+    for (let i = 0; i < data.length; i++)
+    {
+        // Build the row with escaped HTML to prevent XSS
+        contactList += "<tr>";
+        contactList += "<td>" + escapeHtml(data[i].FirstName) + "</td>";
+        contactList += "<td>" + escapeHtml(data[i].LastName) + "</td>";
+        contactList += "<td>" + escapeHtml(data[i].Phone) + "</td>";
+        contactList += "<td>" + escapeHtml(data[i].Email) + "</td>";
+        
+        // Add Edit/Delete Buttons (passing the specific Contact ID to them)
+        contactList += '<td><button onclick="openEditModal(\'' + data[i].ID + '\', this)">Edit</button></td>';
+        contactList += '<td><button onclick="deleteContact(\'' + data[i].ID + '\')">Delete</button></td>';
+        
+        // Close the row
+        contactList += "</tr>";
+    }
+    
+    // Display the contact list
+    document.getElementById("contactTableBody").innerHTML = contactList;
+}
+
+// Assisted by Cursor 
+// Function to sort the contacts data by First Name or Last Name
+function sortBy(columnName)
+{
+    // Sort the contactsData array based on the column name
+    contactsData.sort((a, b) => {
+        if (columnName === "FirstName") {
+            return a.FirstName.localeCompare(b.FirstName);
+        } else if (columnName === "LastName") {
+            return a.LastName.localeCompare(b.LastName);
+        }
+        // If the column name is not First Name or Last Name, return 0
+        return 0;
+    });
+    // Render the table with the sorted data
+    renderTable(contactsData);
+}
 // Function to delete a contact
 // Partially written by Cursor 
 function deleteContact(contactID)
@@ -220,10 +260,10 @@ function openEditModal(id, button)
     let row = button.parentNode.parentNode;
 
     // Get the text from the cells (0=First, 1=Last, 2=Phone, 3=Email)
-    let first = row.cells[0].innerHTML;
-    let last  = row.cells[1].innerHTML;
-    let phone = row.cells[2].innerHTML;
-    let email = row.cells[3].innerHTML;
+    let first = row.cells[0].textContent;
+    let last  = row.cells[1].textContent;
+    let phone = row.cells[2].textContent;
+    let email = row.cells[3].textContent;
 
     // Fill the "Edit" boxes
     document.getElementById("editContactFirstName").value = first;

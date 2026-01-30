@@ -1,9 +1,67 @@
-const urlBase = 'https://home.markstevens.tech/LAMPAPI';
+const urlBase = 'https://christianartigas.com/LAMPAPI';
 const extension = 'php';
 
 let userId = 0;
 let firstName = "";
 let lastName = "";
+
+// Function to switch between login and signup tabs
+function switchTab(tab) {
+	const loginTab = document.getElementById('loginTab');
+	const signupTab = document.getElementById('signupTab');
+	const loginForm = document.getElementById('loginForm');
+	const signupForm = document.getElementById('signupForm');
+	
+	// Clear any error messages
+	document.getElementById('loginResult').innerHTML = '';
+	document.getElementById('signupResult').innerHTML = '';
+	document.getElementById('signupResult').classList.remove('form-message--success');
+	
+	if (tab === 'login') {
+		// Activate login tab
+		loginTab.classList.add('auth-tabs__tab--active');
+		signupTab.classList.remove('auth-tabs__tab--active');
+		loginForm.classList.remove('auth-form--hidden');
+		signupForm.classList.add('auth-form--hidden');
+	} else if (tab === 'signup') {
+		// Activate signup tab
+		signupTab.classList.add('auth-tabs__tab--active');
+		loginTab.classList.remove('auth-tabs__tab--active');
+		signupForm.classList.remove('auth-form--hidden');
+		loginForm.classList.add('auth-form--hidden');
+	}
+}
+
+// Add event listeners for Enter key on form inputs
+document.addEventListener('DOMContentLoaded', function() {
+	// Login form Enter key support
+	const loginInputs = ['loginName', 'loginPassword'];
+	loginInputs.forEach(function(inputId) {
+		const input = document.getElementById(inputId);
+		if (input) {
+			input.addEventListener('keypress', function(event) {
+				if (event.key === 'Enter') {
+					event.preventDefault();
+					doLogin();
+				}
+			});
+		}
+	});
+	
+	// Signup form Enter key support
+	const signupInputs = ['signupUserName', 'signupFirstName', 'signupLastName', 'signupPassword'];
+	signupInputs.forEach(function(inputId) {
+		const input = document.getElementById(inputId);
+		if (input) {
+			input.addEventListener('keypress', function(event) {
+				if (event.key === 'Enter') {
+					event.preventDefault();
+					doSignup();
+				}
+			});
+		}
+	});
+});
 
 function doLogin()
 {
@@ -13,13 +71,19 @@ function doLogin()
 	
 	let login = document.getElementById("loginName").value;
 	let password = document.getElementById("loginPassword").value;
-	var hash = md5( password );
 	
+	// Clear previous messages
 	document.getElementById("loginResult").innerHTML = "";
-
-	//let tmp = {login:login,password:password};
-	var tmp = {login:login,password:hash};
-	let jsonPayload = JSON.stringify( tmp );
+	
+	// Validate inputs
+	if (!login || !password) {
+		document.getElementById("loginResult").innerHTML = "Please fill in all fields";
+		return;
+	}
+	
+	var hash = md5(password);
+	var tmp = {login:login, password:hash};
+	let jsonPayload = JSON.stringify(tmp);
 	
 	let url = urlBase + '/Login.' + extension;
 
@@ -32,12 +96,12 @@ function doLogin()
 		{
 			if (this.readyState == 4 && this.status == 200) 
 			{
-				let jsonObject = JSON.parse( xhr.responseText );
+				let jsonObject = JSON.parse(xhr.responseText);
 				userId = jsonObject.id;
 		
-				if( userId < 0 )
+				if (userId < 0)
 				{		
-					document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
+					document.getElementById("loginResult").innerHTML = "Invalid username or password";
 					return;
 				}
 		
@@ -53,9 +117,8 @@ function doLogin()
 	}
 	catch(err)
 	{
-		document.getElementById("loginResult").innerHTML = err.message;
+		document.getElementById("loginResult").innerHTML = "An error occurred. Please try again.";
 	}
-
 }
 
 function saveCookie()
@@ -114,16 +177,37 @@ function doSignup()
 	let userName = document.getElementById("signupUserName").value;
 	let firstName = document.getElementById("signupFirstName").value;
 	let lastName = document.getElementById("signupLastName").value;
-	let password = md5(document.getElementById("signupPassword").value); 
+	let password = document.getElementById("signupPassword").value;
+	
+	// Clear previous messages
+	document.getElementById("signupResult").innerHTML = "";
+	document.getElementById("signupResult").classList.remove("form-message--success");
+	
+	// Validate inputs
+	if (!userName || !firstName || !lastName || !password) {
+		document.getElementById("signupResult").innerHTML = "Please fill in all fields";
+		return;
+	}
+	
+	// Validate password length
+	if (password.length < 6) {
+		document.getElementById("signupResult").innerHTML = "Password must be at least 6 characters";
+		return;
+	}
+	
+	// Hash the password
+	let hashedPassword = md5(password);
 	
 	// Create a temporary object to hold the values
-	let tmp = {Login:userName,
-		FirstName:firstName,
-		LastName:lastName,
-		Password:password};
+	let tmp = {
+		Login: userName,
+		FirstName: firstName,
+		LastName: lastName,
+		Password: hashedPassword
+	};
 	
 	// Convert the object to a JSON string
-	let jsonPayload = JSON.stringify( tmp );
+	let jsonPayload = JSON.stringify(tmp);
 
 	// Create the URL for the signup API
 	let url = urlBase + '/Signup.' + extension;
@@ -137,17 +221,29 @@ function doSignup()
 		// Handle the response from the API
 		xhr.onreadystatechange = function() 
 		{
-			// If the request is complete and the status is 200 and there is no error, display a success message
 			if (this.readyState == 4 && this.status == 200) 
 			{
 				// Parse the response from the API
-				let jsonObject = JSON.parse( xhr.responseText );
+				let jsonObject = JSON.parse(xhr.responseText);
+				
 				// If there is no error, display a success message
-				if( jsonObject.error == "" )
+				if (jsonObject.error == "" || !jsonObject.error)
 				{
-					document.getElementById("signupResult").innerHTML = "Signup successful";
+					const resultElement = document.getElementById("signupResult");
+					resultElement.innerHTML = "Account created successfully! Please login.";
+					resultElement.classList.add("form-message--success");
+					
+					// Clear the form
+					document.getElementById("signupUserName").value = "";
+					document.getElementById("signupFirstName").value = "";
+					document.getElementById("signupLastName").value = "";
+					document.getElementById("signupPassword").value = "";
+					
+					// Switch to login tab after 2 seconds
+					setTimeout(function() {
+						switchTab('login');
+					}, 2000);
 				}
-
 				// If there is an error, display the error message
 				else
 				{
@@ -161,7 +257,7 @@ function doSignup()
 	// If there is an error, display the error message
 	catch(err)
 	{
-		document.getElementById("signupResult").innerHTML = err.message;
+		document.getElementById("signupResult").innerHTML = "An error occurred. Please try again.";
 	}
 }
 
