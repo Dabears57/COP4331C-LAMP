@@ -82,7 +82,7 @@ function doLogin()
 	}
 	
 	var hash = md5(password);
-	var tmp = {login:login, password:hash};
+	var tmp = {Login:login, Password:hash};
 	let jsonPayload = JSON.stringify(tmp);
 	
 	let url = urlBase + '/Login.' + extension;
