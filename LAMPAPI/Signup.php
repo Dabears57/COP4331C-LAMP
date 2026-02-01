@@ -2,6 +2,10 @@
 <?php
 
 	$inData = getRequestInfo();
+	
+	$id = 0;
+	$firstName = "";
+	$lastName = "";
 
 	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331"); 	
 	if( $conn->connect_error )
@@ -10,16 +14,18 @@
 	}
 	else
 	{
-		$stmt = $conn->prepare("INSERT INTO Users (FirstName, LastName, Login, Password) VALUES (?,?,?,?)");
-		$stmt->bind_param("ssss",  $inData["FirstName"],  $inData["LastName"], $inData["Login"], $inData["Password"]);
+		$stmt = $conn->prepare("SELECT ID,firstName,lastName FROM Users WHERE Login=? AND Password =?");
+		$stmt->bind_param("ss", $inData["login"], $inData["password"]);
+		$stmt->execute();
+		$result = $stmt->get_result();
 
-		if($stmt->execute())
+		if( $row = $result->fetch_assoc()  )
 		{
-			returnWithInfo( $inData["FirstName"], $inData["LastName"], $inData["Login"] );
+			returnWithInfo( $row['firstName'], $row['lastName'], $row['ID'] );
 		}
 		else
 		{
-			returnWithError("Unable to register account");
+			returnWithError("No Records Found");
 		}
 
 		$stmt->close();
@@ -36,16 +42,16 @@
 		header('Content-type: application/json');
 		echo $obj;
 	}
-
+	
 	function returnWithError( $err )
 	{
-		$retValue = '{"username":"","password":"","error":"' . $err . '"}';
+		$retValue = '{"ID":0,"FirstName":"","LastName":"","error":"' . $err . '"}';
 		sendResultInfoAsJson( $retValue );
 	}
 	
-	function returnWithInfo( $firstName, $lastName, $login )
+	function returnWithInfo( $firstName, $lastName, $id )
 	{
-		$retValue = '{"Login":"' . $login . '","FirstName":"' . $firstName . '","LastName":"' . $lastName . '","error":""}';
+		$retValue = '{"ID":' . $id . ',"FirstName":"' . $firstName . '","LastName":"' . $lastName . '","error":""}';
 		sendResultInfoAsJson( $retValue );
 	}
 	
