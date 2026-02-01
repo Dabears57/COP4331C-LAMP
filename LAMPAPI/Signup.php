@@ -10,18 +10,32 @@
 	}
 	else
 	{
-		$stmt = $conn->prepare("INSERT INTO Users (FirstName, LastName, Login, Password) VALUES (?,?,?,?)");
-		$stmt->bind_param("ssss",  $inData["firstName"],  $inData["lastName"], $inData["login"], $inData["password"]);
 
-		if($stmt->execute())
+		$stmt = $conn->prepare("SELECT ID FROM Users WHERE Login=?");
+		$stmt->bind_param("s", $inData["login"]);
+		$stmt->execute();
+		$result = $stmt->get_result();
+
+		if( $row = $result->fetch_assoc()  )
 		{
-			returnWithSuccess();
+			returnWithError("Account Already Exists");
 		}
 		else
 		{
-			returnWithError("Unable to Register Account");
+			$stmt = $conn->prepare("INSERT INTO Users (FirstName, LastName, Login, Password) VALUES (?,?,?,?)");
+			$stmt->bind_param("ssss",  $inData["firstName"],  $inData["lastName"], $inData["login"], $inData["password"]);
+
+			if($stmt->execute())
+			{
+				returnWithSuccess();
+			}
+			else
+			{
+				returnWithError("Unable to Register Account");
+			}
 		}
 
+		
 		$stmt->close();
 		$conn->close();
 	}
