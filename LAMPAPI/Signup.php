@@ -12,7 +12,7 @@
 	{
 
 		$stmt = $conn->prepare("SELECT ID FROM Users WHERE Login=?");
-		$stmt->bind_param("s", $inData["login"]);
+		$stmt->bind_param("s", $inData["Login"]);
 		$stmt->execute();
 		$result = $stmt->get_result();
 
@@ -23,7 +23,7 @@
 		else
 		{
 			$stmt = $conn->prepare("INSERT INTO Users (FirstName, LastName, Login, Password) VALUES (?,?,?,?)");
-			$stmt->bind_param("ssss",  $inData["firstName"],  $inData["lastName"], $inData["login"], $inData["password"]);
+			$stmt->bind_param("ssss",  $inData["FirstName"],  $inData["LastName"], $inData["Login"], $inData["Password"]);
 
 			if($stmt->execute())
 			{
