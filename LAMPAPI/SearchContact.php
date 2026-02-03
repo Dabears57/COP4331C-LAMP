@@ -13,7 +13,7 @@
 	{
 		$stmt = $conn->prepare("SELECT Name FROM Contacts WHERE Name LIKE ? and UserID = ? ");
 		$contactName = "%" . $inData["search"] . "%";
-		$stmt->bind_param("ss", $contactName, $inData["UserID"]);
+		$stmt->bind_param("si", $contactName, $inData["UserID"]);
 		$stmt->execute();
 		
 		$result = $stmt->get_result();
@@ -23,7 +23,7 @@
 			$searchResults[] = $row["Name"];
 		}
 		
-		if( $searchCount == 0 )
+		if( count($searchResults) == 0 )
 		{
 			returnWithError( "No Records Found" );
 		}
