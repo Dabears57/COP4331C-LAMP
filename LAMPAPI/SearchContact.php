@@ -11,16 +11,21 @@
 	} 
 	else
 	{
-		$stmt = $conn->prepare("SELECT Name FROM Contacts WHERE Name LIKE ? and UserID = ? ");
+		$stmt = $conn->prepare("SELECT FirstName, LastName, Phone, Email FROM Contacts WHERE Name LIKE ? and UserID = ? AND FirstName LIKE ?");
 		$contactName = "%" . $inData["search"] . "%";
-		$stmt->bind_param("si", $contactName, $inData["UserID"]);
+		$stmt->bind_param("iss", $inData["UserID"], $contactName);
 		$stmt->execute();
 		
 		$result = $stmt->get_result();
 		
 		while($row = $result->fetch_assoc())
 		{
-			$searchResults[] = $row["Name"];
+			$searchResults[] = [
+				"FirstName" => $row["FirstName"],
+				"LastName" => $row["LastName"],
+				"Phone" => $row["Phone"],
+				"Email" => $row["Email"]
+			]
 		}
 		
 		if( count($searchResults) == 0 )
