@@ -11,7 +11,7 @@
 	} 
 	else
 	{
-		$stmt = $conn->prepare("SELECT FirstName, LastName, Phone, Email FROM Contacts WHERE Name LIKE ? and UserID = ? AND FirstName LIKE ?");
+		$stmt = $conn->prepare("SELECT FirstName, LastName, Phone, Email FROM Users WHERE Name LIKE ? and UserID = ? AND FirstName LIKE ?");
 		$contactName = "%" . $inData["search"] . "%";
 		$stmt->bind_param("iss", $inData["UserID"], $contactName);
 		$stmt->execute();
