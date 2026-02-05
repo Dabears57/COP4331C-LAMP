@@ -29,9 +29,8 @@
 
     // The contact is deleted only if it belongs to the given user
 	$stmt = $conn->prepare(
-		"UPDATE Contacts
-		 SET DeletedAt = CURRENT_TIMESTAMP
-		 WHERE ID=? AND UserID=? AND DeletedAt IS NULL"
+		"DELETE FROM Contacts
+		 WHERE ID = ? AND UserID = ?"
 	);
 
 	$stmt->bind_param("ii", $contactId, $userId);
