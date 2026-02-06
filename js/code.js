@@ -82,7 +82,7 @@ function doLogin()
 	}
 	
 	var hash = md5(password);
-	var tmp = {Login:login, Password:hash};
+	var tmp = {login:login, password:hash};
 	let jsonPayload = JSON.stringify(tmp);
 	
 	let url = urlBase + '/Login.' + extension;
@@ -97,7 +97,7 @@ function doLogin()
 			if (this.readyState == 4 && this.status == 200) 
 			{
 				let jsonObject = JSON.parse(xhr.responseText);
-				userId = jsonObject.ID;
+				userId = jsonObject.userId;
 		
 				if (userId < 1)
 				{		
@@ -105,8 +105,8 @@ function doLogin()
 					return;
 				}
 		
-				firstName = jsonObject.FirstName;
-				lastName = jsonObject.LastName;
+				firstName = jsonObject.firstName;
+				lastName = jsonObject.lastName;
 
 				saveCookie();
 	
@@ -200,10 +200,10 @@ function doSignup()
 	
 	// Create a temporary object to hold the values
 	let tmp = {
-		Login: userName,
-		FirstName: firstName,
-		LastName: lastName,
-		Password: hashedPassword
+		login: userName,
+		firstName: firstName,
+		lastName: lastName,
+		password: hashedPassword
 	};
 	
 	// Convert the object to a JSON string

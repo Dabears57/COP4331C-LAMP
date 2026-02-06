@@ -107,14 +107,14 @@ function renderTable(data)
     {
         // Build the row with escaped HTML to prevent XSS
         contactList += "<tr>";
-        contactList += "<td>" + escapeHtml(data[i].FirstName) + "</td>";
-        contactList += "<td>" + escapeHtml(data[i].LastName) + "</td>";
-        contactList += "<td>" + escapeHtml(data[i].Phone) + "</td>";
-        contactList += "<td>" + escapeHtml(data[i].Email) + "</td>";
+        contactList += "<td>" + escapeHtml(data[i].firstName) + "</td>";
+        contactList += "<td>" + escapeHtml(data[i].lastName) + "</td>";
+        contactList += "<td>" + escapeHtml(data[i].phone) + "</td>";
+        contactList += "<td>" + escapeHtml(data[i].email) + "</td>";
         
         // Add Edit/Delete Buttons (passing the specific Contact ID to them)
-        contactList += '<td><button onclick="openEditModal(\'' + data[i].ID + '\', this)">Edit</button></td>';
-        contactList += '<td><button onclick="deleteContact(\'' + data[i].ID + '\')">Delete</button></td>';
+        contactList += '<td><button onclick="openEditModal(\'' + data[i].contactId + '\', this)">Edit</button></td>';
+        contactList += '<td><button onclick="deleteContact(\'' + data[i].contactId + '\')">Delete</button></td>';
         
         // Close the row
         contactList += "</tr>";
@@ -130,10 +130,10 @@ function sortBy(columnName)
 {
     // Sort the contactsData array based on the column name
     contactsData.sort((a, b) => {
-        if (columnName === "FirstName") {
-            return a.FirstName.localeCompare(b.FirstName);
-        } else if (columnName === "LastName") {
-            return a.LastName.localeCompare(b.LastName);
+        if (columnName === "firstName") {
+            return a.firstName.localeCompare(b.firstName);
+        } else if (columnName === "lastName") {
+            return a.lastName.localeCompare(b.lastName);
         }
         // If the column name is not First Name or Last Name, return 0
         return 0;
@@ -153,7 +153,7 @@ function deleteContact(contactID)
         return;
     }
     // Create a temporary object + JSON payload to send to the API 
-    let tmp = {ID:contactID,UserID:userId};
+    let tmp = {contactId:contactID,userId:userId};
     let jsonPayload = JSON.stringify( tmp );
 
     // Create the URL for the delete contact API
@@ -203,11 +203,11 @@ function addContact()
         document.getElementById("contactAddResult").innerHTML = "All fields are required";
         return;
     }
-	let tmp = {FirstName:newContactFN,
-        LastName:newContactLN,
-        Phone:newContactPhone,
-        Email:newContactEmail,
-        UserID:userId};
+	let tmp = {firstName:newContactFN,
+        lastName:newContactLN,
+        phone:newContactPhone,
+        email:newContactEmail,
+        userId:userId};
 	let jsonPayload = JSON.stringify( tmp );
 
     // Create the URL for the add contact API
@@ -299,12 +299,12 @@ function editContact()
         return;
     }
 
-    let tmp = {ID:contactID,
-        FirstName:newContactFN,
-        LastName:newContactLN,
-        Phone:newContactPhone,
-        Email:newContactEmail,
-        UserID:userId};
+    let tmp = {contactId:contactID,
+        firstName:newContactFN,
+        lastName:newContactLN,
+        phone:newContactPhone,
+        email:newContactEmail,
+        userId:userId};
     let jsonPayload = JSON.stringify( tmp );
 
     // Create the URL for the edit contact API

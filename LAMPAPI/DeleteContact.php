@@ -30,7 +30,7 @@
     // The contact is deleted only if it belongs to the given user
 	$stmt = $conn->prepare(
 		"DELETE FROM Contacts
-		 WHERE ID = ? AND UserID = ?"
+		 WHERE contactId = ? AND userId = ?"
 	);
 
 	$stmt->bind_param("ii", $contactId, $userId);

@@ -21,8 +21,8 @@
          // Ensures the contact belongs to the logged-in user
 		$stmt = $conn->prepare(
 			"UPDATE Contacts
-			 SET FirstName=?, LastName=?, Phone=?, Email=?, Company=?, Address=?, Note=?
-			 WHERE ID=? AND UserID=? AND DeletedAt IS NULL"
+			 SET firstName=?, lastName=?, phone=?, email=?, company=?, address=?, note=?
+			 WHERE contactId=? AND userId=? AND deletedAt IS NULL"
 		);
 
         // Bind the changes
