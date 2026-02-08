@@ -11,7 +11,7 @@
 	} 
 	else
 	{
-		$stmt = $conn->prepare("SELECT contactId, firstName, lastName, phone, email FROM Contacts WHERE (firstName LIKE ? OR lastName LIKE ?) AND userId = ?");
+		$stmt = $conn->prepare("SELECT contactId, firstName, lastName, phone, email, company, address, note FROM Contacts WHERE (firstName LIKE ? OR lastName LIKE ?) AND userId = ?");
 		$contactName = "%" . $inData["search"] . "%";
 		$stmt->bind_param("ssi", $contactName, $contactName, $inData["userId"]);
 
@@ -25,7 +25,10 @@
 				"firstName" => $row["firstName"],
 				"lastName" => $row["lastName"],
 				"phone" => $row["phone"],
-				"email" => $row["email"]
+				"email" => $row["email"],
+				"company" => $row["company"],
+				"address" => $row["address"],
+				"note" => $row["note"]
 			];
 		}
 		
