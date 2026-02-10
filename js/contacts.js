@@ -16,6 +16,32 @@ function loadPage()
     searchContacts();
 }
 
+// Helper function to open the add contact modal
+function openAddModal()
+{
+    document.getElementById("addContactModal").style.display = "block";
+    document.getElementById("contactAddResult").innerHTML = "";
+}
+
+// Helper function to close the add contact modal
+function closeAddModal()
+{
+    document.getElementById("addContactModal").style.display = "none";
+    document.getElementById("contactFirstName").value = "";
+    document.getElementById("contactLastName").value = "";
+    document.getElementById("contactPhone").value = "";
+    document.getElementById("contactEmail").value = "";
+    document.getElementById("contactAddResult").innerHTML = "";
+}
+
+// Helper function to close the edit contact modal
+function closeEditModal()
+{
+    document.getElementById("editContactModal").style.display = "none";
+    document.getElementById("contactEditResult").innerHTML = "";
+    document.getElementById("contactDeleteResult").innerHTML = "";
+}
+
 // Helper function to escape HTML and prevent XSS attacks (written by Cursor) 
 function escapeHtml(text) {
     const div = document.createElement('div');
@@ -98,7 +124,7 @@ function renderTable(data)
     
     // Check if data exists and handle empty array
     if (!data || data.length === 0) {
-        document.getElementById("contactTableBody").innerHTML = "<tr><td colspan='6'>No contacts found</td></tr>";
+        document.getElementById("contactTableBody").innerHTML = "<tr><td colspan='4'>No contacts found</td></tr>";
         return;
     }
     
@@ -106,22 +132,42 @@ function renderTable(data)
     for (let i = 0; i < data.length; i++)
     {
         // Build the row with escaped HTML to prevent XSS
-        contactList += "<tr>";
+        // Make the entire row clickable to open edit modal
+        contactList += "<tr onclick=\"openEditModalById('" + data[i].contactId + "')\" style=\"cursor: pointer;\">";
         contactList += "<td>" + escapeHtml(data[i].firstName) + "</td>";
         contactList += "<td>" + escapeHtml(data[i].lastName) + "</td>";
         contactList += "<td>" + escapeHtml(data[i].phone) + "</td>";
         contactList += "<td>" + escapeHtml(data[i].email) + "</td>";
-        
-        // Add Edit/Delete Buttons (passing the specific Contact ID to them)
-        contactList += '<td><button onclick="openEditModal(\'' + data[i].contactId + '\', this)">Edit</button></td>';
-        contactList += '<td><button onclick="deleteContact(\'' + data[i].contactId + '\')">Delete</button></td>';
-        
-        // Close the row
         contactList += "</tr>";
     }
     
     // Display the contact list
     document.getElementById("contactTableBody").innerHTML = contactList;
+}
+
+// Helper function to open edit modal by contact ID
+function openEditModalById(contactId)
+{
+    // Find the contact in the contactsData array
+    let contact = contactsData.find(c => c.contactId == contactId);
+    
+    if (!contact) {
+        return;
+    }
+    
+    // Save the ID and populate the form
+    document.getElementById("editContactId").value = contactId;
+    document.getElementById("editContactFirstName").value = contact.firstName;
+    document.getElementById("editContactLastName").value = contact.lastName;
+    document.getElementById("editContactPhone").value = contact.phone;
+    document.getElementById("editContactEmail").value = contact.email;
+    
+    // Clear any previous messages
+    document.getElementById("contactEditResult").innerHTML = "";
+    document.getElementById("contactDeleteResult").innerHTML = "";
+    
+    // Show the modal
+    document.getElementById("editContactModal").style.display = "block";
 }
 
 // Assisted by Cursor 
@@ -170,8 +216,8 @@ function deleteContact(contactID)
         {
             if (this.readyState == 4 && this.status == 200) 
             {
-                // Display the success message
-                document.getElementById("contactDeleteResult").innerHTML = "Contact has been deleted";
+                // Close the edit modal
+                closeEditModal();
 
                 // Reload the contacts to update with contact deleted.  
                 searchContacts(); 
@@ -224,20 +270,11 @@ function addContact()
         {
             if (this.readyState == 4 && this.status == 200) 
             {
-                // Display the success message
-                document.getElementById("contactAddResult").innerHTML = "Contact has been added";
+                // Close the add contact modal
+                closeAddModal();
 
                 // Reload the contacts to update with new contact added.  
-                searchContacts(); 
-
-                // Close the add contact modal
-                document.getElementById("addContactModal").style.display = "none";
-
-                // Clear the add contact form
-                document.getElementById("contactFirstName").value = "";
-                document.getElementById("contactLastName").value = "";
-                document.getElementById("contactPhone").value = "";
-                document.getElementById("contactEmail").value = "";
+                searchContacts();
             }
         };
         xhr.send(jsonPayload);
@@ -247,32 +284,6 @@ function addContact()
         // Display the error message
         document.getElementById("contactAddResult").innerHTML = err.message;
     }
-}
-
-// Function to open the edit modal and populate it with existing contact data
-// Mostly written by cursor, some help from Gemini
-function openEditModal(id, button)
-{
-    // Save the ID for later (when the user clicks "Save")
-    document.getElementById("editContactId").value = id;
-
-    // Find the row that holds this button
-    let row = button.parentNode.parentNode;
-
-    // Get the text from the cells (0=First, 1=Last, 2=Phone, 3=Email)
-    let first = row.cells[0].textContent;
-    let last  = row.cells[1].textContent;
-    let phone = row.cells[2].textContent;
-    let email = row.cells[3].textContent;
-
-    // Fill the "Edit" boxes
-    document.getElementById("editContactFirstName").value = first;
-    document.getElementById("editContactLastName").value = last;
-    document.getElementById("editContactPhone").value = phone;
-    document.getElementById("editContactEmail").value = email;
-
-    // Show the popup
-    document.getElementById("editContactModal").style.display = "block";
 }
 
 // Function to submit the edited contact (called when user clicks "Save" in the modal)
@@ -321,14 +332,11 @@ function editContact()
         {
             if (this.readyState == 4 && this.status == 200) 
             {
-                // Display the success message
-                document.getElementById("contactEditResult").innerHTML = "Contact has been edited";
+                // Close the edit contact modal
+                closeEditModal();
 
                 // Reload the contacts to update with edited contact
-                searchContacts(); 
-
-                // Close the edit contact modal
-                document.getElementById("editContactModal").style.display = "none";
+                searchContacts();
             }
         };
         xhr.send(jsonPayload);

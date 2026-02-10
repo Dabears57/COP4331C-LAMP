@@ -2,20 +2,14 @@
 <html>
 
 <head>
-	<title>COP 4331 LAMP Stack Demo</title>
+	<title>Contact Manager</title>
 	<script type="text/javascript" src="js/code.js"></script>
 	<script type="text/javascript" src="js/contacts.js"></script>
 	<link href="css/styles.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 
 	<script type="text/javascript">
-		document.addEventListener('DOMContentLoaded', function () {
-			readCookie();
-		}, false);
-	</script>
-
-	<script>
-		document.addEventListener("DOMContentLoaded", loadPage);
+		document.addEventListener('DOMContentLoaded', loadPage);
 	</script>
 
 </head>
@@ -25,45 +19,62 @@
 	<h1 id="title">Contact Manager</h1>
 
 	<div id="loggedInDiv">
-		<span id="userName"></span><br />
-		<button type="button" id="logoutButton" class="buttons" onclick="doLogout();"> Log Out </button>
+		<span id="userName"></span>
+		<button type="button" id="logoutButton" class="buttons" onclick="doLogout();">Log Out</button>
 	</div>
 
+	<div id="accessUIDiv">
+		<input type="text" id="searchText" placeholder="Search contacts..." />
+		<button type="button" id="searchContactButton" class="buttons" onclick="searchContacts();">Search</button>
+		<button type="button" id="addContactButton" class="buttons" onclick="openAddModal();">Add Contact</button>
+		<span id="contactSearchResult"></span>
+	</div>
 
-	<div id = "table">
+	<div id="table">
 		<table>
 			<thead>
 				<tr>
 					<th>First Name</th>
 					<th>Last Name</th>
 					<th>Phone Number</th>
-					<th>Email Adress</th>
+					<th>Email Address</th>
 				</tr>
 			</thead>
-
 			<tbody id="contactTableBody">
-				<!-- Data will be here, generated from code.js :D -->
+				<!-- Contacts will be loaded here -->
 			</tbody>
 		</table>
-
-
 	</div>
 
+	<!-- Add Contact Modal -->
+	<div id="addContactModal" style="display:none;">
+		<div class="modal-content">
+			<h2>Add New Contact</h2>
+			<input type="text" id="contactFirstName" placeholder="First Name" />
+			<input type="text" id="contactLastName" placeholder="Last Name" />
+			<input type="text" id="contactPhone" placeholder="Phone Number" />
+			<input type="text" id="contactEmail" placeholder="Email" />
+			<button type="button" onclick="addContact();">Save</button>
+			<button type="button" onclick="closeAddModal();">Cancel</button>
+			<span id="contactAddResult"></span>
+		</div>
+	</div>
 
-
-	<div id="accessUIDiv">
-		<br />
-
-		<input type="text" id="searchText" placeholder="Contact To Search For" />
-		<button type="button" id="searchContactButton" class="buttons" onclick="searchContacts();"> Search Contact
-		</button><br />
-		<span id="contactSearchResult"></span>
-		<p id="contactList">
-		</p><br /><br />
-
-		<input type="text" id="contactText" placeholder="Contact To Add">
-		<button type="button" id="addContactButton" class="buttons" onclick="addContact();"> Add Contact </button><br />
-		<span id="contactAddResult"></span>
+	<!-- Edit Contact Modal -->
+	<div id="editContactModal" style="display:none;">
+		<div class="modal-content">
+			<h2>Edit Contact</h2>
+			<input type="hidden" id="editContactId" />
+			<input type="text" id="editContactFirstName" placeholder="First Name" />
+			<input type="text" id="editContactLastName" placeholder="Last Name" />
+			<input type="text" id="editContactPhone" placeholder="Phone Number" />
+			<input type="text" id="editContactEmail" placeholder="Email" />
+			<button type="button" onclick="editContact();">Save</button>
+			<button type="button" onclick="deleteContact(document.getElementById('editContactId').value);">Delete</button>
+			<button type="button" onclick="closeEditModal();">Cancel</button>
+			<span id="contactEditResult"></span>
+			<span id="contactDeleteResult"></span>
+		</div>
 	</div>
 
 </body>
