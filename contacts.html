@@ -1,41 +1,71 @@
+<!DOCTYPE html>
 <html>
+
 <head>
 	<title>COP 4331 LAMP Stack Demo</title>
 	<script type="text/javascript" src="js/code.js"></script>
-    <link href="css/styles.css" rel="stylesheet">	
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-	
+	<script type="text/javascript" src="js/contacts.js"></script>
+	<link href="css/styles.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
 	<script type="text/javascript">
-	document.addEventListener('DOMContentLoaded', function() 
-	{
-		readCookie();
-	}, false);
+		document.addEventListener('DOMContentLoaded', function () {
+			readCookie();
+		}, false);
 	</script>
-	
+
+	<script>
+		document.addEventListener("DOMContentLoaded", loadPage);
+	</script>
+
 </head>
+
 <body>
 
-<h1 id="title">COP 4331 LAMP Stack Demo</h1>
+	<h1 id="title">Contact Manager</h1>
 
-<div id="loggedInDiv">
-	<span id="userName"></span><br />
-	<button type="button" id="logoutButton" class="buttons" onclick="doLogout();"> Log Out </button>
-</div>
+	<div id="loggedInDiv">
+		<span id="userName"></span><br />
+		<button type="button" id="logoutButton" class="buttons" onclick="doLogout();"> Log Out </button>
+	</div>
 
-<div id="accessUIDiv">
-	<br />
 
-	<input type="text" id="searchText" placeholder="Color To Search For"/>
-	<button type="button" id="searchColorButton" class="buttons" onclick="searchColor();"> Search Color </button><br />
-	<span id="colorSearchResult"></span>
-	<p id="colorList">
-	</p><br /><br />
+	<div id = "table">
+		<table>
+			<thead>
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Phone Number</th>
+					<th>Email Adress</th>
+				</tr>
+			</thead>
 
-	<input type="text" id="colorText" placeholder="Color To Add">
-	<button type="button" id="addColorButton" class="buttons" onclick="addColor();"> Add Color </button><br />
-	<span id="colorAddResult"></span>
-</div>
+			<tbody id="contactTableBody">
+				<!-- Data will be here, generated from code.js :D -->
+			</tbody>
+		</table>
+
+
+	</div>
+
+
+
+	<div id="accessUIDiv">
+		<br />
+
+		<input type="text" id="searchText" placeholder="Contact To Search For" />
+		<button type="button" id="searchContactButton" class="buttons" onclick="searchContacts();"> Search Contact
+		</button><br />
+		<span id="contactSearchResult"></span>
+		<p id="contactList">
+		</p><br /><br />
+
+		<input type="text" id="contactText" placeholder="Contact To Add">
+		<button type="button" id="addContactButton" class="buttons" onclick="addContact();"> Add Contact </button><br />
+		<span id="contactAddResult"></span>
+	</div>
 
 </body>
-</html>
 
+</html>
