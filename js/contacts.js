@@ -67,7 +67,7 @@ function searchContacts()
 	let jsonPayload = JSON.stringify( tmp );
 
     // Create the URL for the search contacts API
-    let url = urlBase + '/SearchContacts.' + extension;
+    let url = urlBase + '/SearchContact.' + extension;
 
     // Create a new XMLHttpRequest object
 	let xhr = new XMLHttpRequest();
