@@ -162,6 +162,18 @@ function readCookie()
 	}
 }
 
+// Function written by Gemini - allows user to go back to the previous page on the site, or else takes to home page. 
+function safeBack() {
+    // If they came from somewhere else on your site, go back
+    if (document.referrer && document.referrer.includes(window.location.hostname)) {
+        window.history.back();
+    } 
+    // If they typed the URL directly or came from Google, go to home
+    else {
+        window.location.href = "index.html"; 
+    }
+}
+
 function doLogout()
 {
 	userId = 0;
