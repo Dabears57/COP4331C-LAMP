@@ -9,21 +9,21 @@
 		exit;
 	}
 
-	// Needed identifiers
+	// Required identifiers
 	if (!isset($inData["contactId"]) || !isset($inData["userId"]))
 	{
 		returnWithError("Missing contactId or userId");
 		exit;
 	}
 
-	$contactId = (int)$inData["contactId"];
-	$userId    = (int)$inData["userId"];
-
 	if (!isset($inData["firstName"]) || $inData["firstName"] === "")
 	{
 		returnWithError("Missing firstName");
 		exit;
 	}
+
+	$contactId = (int)$inData["contactId"];
+	$userId    = (int)$inData["userId"];
 
 	$firstName = $inData["firstName"];
 	$lastName  = $inData["lastName"]  ?? "";
@@ -42,8 +42,8 @@
 
 	$stmt = $conn->prepare(
 		"UPDATE Contacts
-		 SET FirstName=?, LastName=?, Phone=?, Email=?, Company=?, Address=?, Note=?
-		 WHERE ID=? AND UserID=?"
+		 SET firstName=?, lastName=?, phone=?, email=?, company=?, address=?, note=?
+		 WHERE contactId=? AND userId=?"
 	);
 
 	if ($stmt === false)
@@ -55,20 +55,13 @@
 
 	$stmt->bind_param(
 		"sssssssii",
-		$firstName,
-		$lastName,
-		$phone,
-		$email,
-		$company,
-		$address,
-		$note,
-		$contactId,
-		$userId
+		$firstName, $lastName, $phone, $email, $company, $address, $note,
+		$contactId, $userId
 	);
 
 	$stmt->execute();
 
-	// Treat "no changes" as success
+	// Treat "no changes" as success 
 	if ($stmt->errno !== 0)
 	{
 		returnWithError("Update failed: " . $stmt->error);
