@@ -205,6 +205,41 @@ body > *:not(.top-bar) {
     margin-top: var(--topbar-height);
 }
 
+/* Help/About Button in Top Bar */
+.top-bar__help-btn {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: 2px solid var(--color-primary);
+    color: var(--color-primary);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.top-bar__help-btn:hover {
+    background-color: var(--color-primary);
+    color: var(--color-text-primary);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 4px 12px rgba(142, 97, 255, 0.4);
+}
+
+.top-bar__help-btn:focus {
+    outline: 2px solid var(--color-secondary);
+    outline-offset: 2px;
+}
+
 /* ============================================
    AUTH CONTAINER & CARD
    ============================================ */
@@ -380,6 +415,27 @@ body > *:not(.top-bar) {
     transform: translateY(0);
 }
 
+.btn--secondary {
+    background-color: var(--color-bg-medium);
+    color: var(--color-text-primary);
+    border: 2px solid var(--color-primary);
+}
+
+.btn--secondary:hover {
+    background-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(142, 97, 255, 0.3);
+}
+
+.btn--secondary:active {
+    transform: translateY(0);
+}
+
+.btn--secondary:focus {
+    outline: 2px solid var(--color-secondary);
+    outline-offset: 2px;
+}
+
 /* ============================================
    MESSAGES
    ============================================ */
@@ -467,7 +523,94 @@ select {
     color: var(--color-error);
 }
 
-/* Mobile Optimization */
+/* ========== ABOUT PAGE ========== */
+.about-back-btn {
+    position: absolute;
+    top: 30px;        /* Adjust this value to move button up/down */
+    left: 30px;       /* Adjust this value to move button left/right */
+    z-index: 50;
+    padding: 10px 20px;
+    font-size: 14px;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.back-arrow {
+    font-size: 16px;
+    line-height: 1;
+    display: inline-block;
+}
+
+.about-card {
+    max-width: 1000px;
+    padding: 40px;
+}
+
+.about-section {
+    margin-bottom: 40px;
+    text-align: left;
+}
+
+.about-section__title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.about-section__text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+    color: var(--color-text-primary);
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.team-member-card {
+    padding: 25px;
+    background: var(--color-bg-dark);
+    border-radius: 8px;
+    border: 1px solid var(--color-primary);
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.team-member-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--color-secondary);
+}
+
+.team-member-card:focus-within {
+    outline: 2px solid var(--color-secondary);
+    outline-offset: 2px;
+}
+
+.team-member-card h3 {
+    margin: 0 0 12px 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.team-member-card p {
+    font-size: 16px;
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
 /* Mobile Optimization */
 @media screen and (max-width: 600px) {
     /* 1. Make the card fit the screen width */
@@ -480,5 +623,40 @@ select {
     /* 2. Slightly shrink the big title so it doesn't wrap weirdly */
     .auth-card__title {
         font-size: 32px; 
+    }
+    
+    /* 3. About page mobile adjustments */
+    .about-card {
+        max-width: 100%;
+        padding: 20px;
+    }
+    
+    .about-back-btn {
+        left: 10px;
+        top: 80px;
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+    
+    .about-section__title {
+        font-size: 22px;
+    }
+    
+    .about-section__text {
+        font-size: 16px;
+    }
+    
+    .team-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    /* Adjust top bar text for mobile */
+    .top-bar__text--primary {
+        font-size: 36px;
+    }
+    
+    .top-bar__text--secondary {
+        font-size: 24px;
     }
 }
