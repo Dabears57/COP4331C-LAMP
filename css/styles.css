@@ -1063,19 +1063,17 @@ select {
         gap: 15px;
     }
     
-    /* Adjust top bar text for mobile */
+    /* Adjust top bar for mobile - shift content right to avoid button overlap */
+    .top-bar__content {
+        margin-left: 50px;  /* Make room for the i button on the left */
+    }
+    
     .top-bar__text--primary {
         font-size: 36px;
     }
     
     .top-bar__text--secondary {
         font-size: 24px;
-    }
-
-    /* Move help button to right side on mobile to avoid overlap */
-    .top-bar__help-btn {
-        left: auto;
-        right: 15px;
     }
 
 }
