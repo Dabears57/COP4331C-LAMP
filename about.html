@@ -1,0 +1,96 @@
+<!-- About Us Page -->
+ <!-- Base written by Gemini -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Contact Manager</title>
+    <link href="css/styles.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+</head>
+<body>
+    <div class="top-bar">
+        <div class="top-bar__content">
+            <span class="top-bar__text--primary">AFC</span>
+            <span class="top-bar__text--secondary">CONTACT MANAGER</span>
+        </div>
+        <a href="about.html" class="top-bar__help-btn" aria-label="About us" title="About Us">i</a>
+    </div>
+
+    <button type="button" class="btn btn--secondary about-back-btn" onclick="safeBack()" aria-label="Go back to previous page">
+        <span class="back-arrow">◄</span> Back
+    </button>
+
+    <main class="auth-container">
+        <div class="auth-card about-card">
+            <div class="auth-card__header">
+                <h1 class="auth-card__title">ABOUT US</h1>
+            </div>
+
+            <div class="about-section">
+                <h2 class="about-section__title">THE TEAM</h2>
+            </div>
+            
+            <div class="team-grid">
+                <div class="team-member-card">
+                    <h3>Mark Stevens</h3>
+                    <p>Project Manager / Frontend Developer</p>
+                </div>
+                <div class="team-member-card">
+                    <h3>Braden Lott</h3>
+                    <p>API Developer</p>
+                </div>
+                <div class="team-member-card">
+                    <h3>Martin Inciarte</h3>
+                    <p>API Developer</p>
+                </div>
+                <div class="team-member-card">
+                    <h3>Chelsea Francois</h3>
+                    <p>API Developer</p>
+                </div>
+                <div class="team-member-card">
+                    <h3>Tiffany Marcus</h3>
+                    <p>Frontend Developer</p>
+                </div>
+                <div class="team-member-card">
+                    <h3>Christian Artigas</h3>
+                    <p>Database Developer</p>
+                </div>
+            </div>
+
+            <div class="about-section">
+                <h2 class="about-section__title">THE PROJECT</h2>
+                <p class="about-section__text">
+                    Our team was tasked with building a fully functional LAMP stack Contact Manager. We developed 
+                    the core layers of the application, including the remote server, the MySQL database, the PHP 
+                    API, and the JavaScript and HTML front end.
+                    The final site features a complete user authentication system. Once a user registers and logs 
+                    in, they get a personal dashboard where they can easily add, search, edit, and delete their contacts.
+                </p>
+            </div>
+
+            <div class="about-section">
+                <h2 class="about-section__title">OUR MISSION</h2>
+                <p class="about-section__text">
+                    At the AFC (Aedo Fan Club), our core directive is to operate as the premier purveyors of Professor Aedo 
+                    appreciation. We are deeply committed to optimizing instructor morale, with the strategic goal of 
+                    yielding unprecedented returns on extra credit. We recognize that the industry competition to be his 
+                    biggest fan is steep. Therefore, by seamlessly integrating our devotion into our corporate branding 
+                    and delivering a flawless LAMP stack project, we aim to maximize our grading ROI and officially secure 
+                    our place as his favorite development team.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/code.js"></script>
+</body>
+</html>
