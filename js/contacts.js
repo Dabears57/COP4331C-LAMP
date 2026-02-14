@@ -242,16 +242,31 @@ function addContact()
     // Get the values from contact form and create a JSON payload. 
 	let newContactFN = document.getElementById("contactFirstName").value;
 	let newContactLN = document.getElementById("contactLastName").value;
-	let newContactPhone = document.getElementById("contactPhone").value;
+	let rawPhone = document.getElementById("contactPhone").value;
 	let newContactEmail = document.getElementById("contactEmail").value;
-    if( newContactFN == "" || newContactLN == "" || newContactPhone == "" || newContactEmail == "" )
+    
+    // Validate that all fields are filled out
+    if( newContactFN == "" || newContactLN == "" || rawPhone == "" || newContactEmail == "" )
     {
         document.getElementById("contactAddResult").innerHTML = "All fields are required";
         return;
     }
+    
+    // Clean phone number - remove all non-digit characters
+    let cleanPhone = rawPhone.replace(/\D/g, '');
+    
+    // Validate phone number is exactly 10 digits
+    if (cleanPhone.length !== 10) {
+        document.getElementById("contactAddResult").innerHTML = "Please enter a valid 10-digit phone number";
+        return;
+    }
+    
+    // Format phone number to (XXX) XXX-XXXX
+    let formattedPhone = '(' + cleanPhone.substring(0,3) + ') ' + cleanPhone.substring(3,6) + '-' + cleanPhone.substring(6,10);
+    
 	let tmp = {firstName:newContactFN,
         lastName:newContactLN,
-        phone:newContactPhone,
+        phone:formattedPhone,
         email:newContactEmail,
         userId:userId};
 	let jsonPayload = JSON.stringify( tmp );
@@ -299,21 +314,33 @@ function editContact()
     // Get the values from contact form and create a JSON payload
     let newContactFN = document.getElementById("editContactFirstName").value;
     let newContactLN = document.getElementById("editContactLastName").value;
-    let newContactPhone = document.getElementById("editContactPhone").value;
+    let rawPhone = document.getElementById("editContactPhone").value;
     let newContactEmail = document.getElementById("editContactEmail").value;
 
     // Validate that all fields are filled out
-    if( newContactFN == "" || newContactLN == "" || newContactPhone == "" || newContactEmail == "" )
+    if( newContactFN == "" || newContactLN == "" || rawPhone == "" || newContactEmail == "" )
     {
         // Inform the user that all fields are required
         document.getElementById("contactEditResult").innerHTML = "All fields are required";
         return;
     }
+    
+    // Clean phone number - remove all non-digit characters
+    let cleanPhone = rawPhone.replace(/\D/g, '');
+    
+    // Validate phone number is exactly 10 digits
+    if (cleanPhone.length !== 10) {
+        document.getElementById("contactEditResult").innerHTML = "Please enter a valid 10-digit phone number";
+        return;
+    }
+    
+    // Format phone number to (XXX) XXX-XXXX
+    let formattedPhone = '(' + cleanPhone.substring(0,3) + ') ' + cleanPhone.substring(3,6) + '-' + cleanPhone.substring(6,10);
 
     let tmp = {contactId:contactID,
         firstName:newContactFN,
         lastName:newContactLN,
-        phone:newContactPhone,
+        phone:formattedPhone,
         email:newContactEmail,
         userId:userId};
     let jsonPayload = JSON.stringify( tmp );
