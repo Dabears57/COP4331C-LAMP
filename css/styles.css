@@ -385,6 +385,17 @@ body > *:not(.top-bar) {
     box-shadow: 0 0 0 3px var(--color-primary-alpha-10);
 }
 
+/* Error state for form inputs */
+.form-input--error {
+    border-color: var(--color-error) !important;
+    box-shadow: 0 0 0 3px var(--color-error-alpha-10) !important;
+}
+
+.form-input--error:focus {
+    border-color: var(--color-error) !important;
+    box-shadow: 0 0 0 3px var(--color-error-alpha-10) !important;
+}
+
 /* Password Input Wrapper */
 .password-input-wrapper {
     position: relative;

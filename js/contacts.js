@@ -236,8 +236,10 @@ function deleteContact(contactID)
 // Partially written by Cursor / Gemini
 function addContact()
 {
-    // Clear the previous result message
+    // Clear the previous result message and error styling
     document.getElementById("contactAddResult").innerHTML = "";
+    document.getElementById("contactAddResult").classList.remove("form-message--error");
+    document.getElementById("contactPhone").classList.remove("form-input--error");
 
     // Get the values from contact form and create a JSON payload. 
 	let newContactFN = document.getElementById("contactFirstName").value;
@@ -245,10 +247,20 @@ function addContact()
 	let rawPhone = document.getElementById("contactPhone").value;
 	let newContactEmail = document.getElementById("contactEmail").value;
     
-    // Validate that all fields are filled out
-    if( newContactFN == "" || newContactLN == "" || rawPhone == "" || newContactEmail == "" )
+    
+    // Validate that phone number is entered
+    if( rawPhone == "" )
     {
-        document.getElementById("contactAddResult").innerHTML = "All fields are required";
+        document.getElementById("contactAddResult").innerHTML = "Phone number is required";
+        document.getElementById("contactAddResult").classList.add("form-message--error");
+        return;
+    }
+
+    // Validate that first name is entered
+    if( newContactFN == "" )
+    {
+        document.getElementById("contactAddResult").innerHTML = "First name is required";
+        document.getElementById("contactAddResult").classList.add("form-message--error");
         return;
     }
     
@@ -258,6 +270,8 @@ function addContact()
     // Validate phone number is exactly 10 digits
     if (cleanPhone.length !== 10) {
         document.getElementById("contactAddResult").innerHTML = "Please enter a valid 10-digit phone number";
+        document.getElementById("contactAddResult").classList.add("form-message--error");
+        document.getElementById("contactPhone").classList.add("form-input--error");
         return;
     }
     
@@ -305,8 +319,10 @@ function addContact()
 // Heavily assisted by cursor, some help from Gemini 
 function editContact()
 {
-    // Clear the previous result message
+    // Clear the previous result message and error styling
     document.getElementById("contactEditResult").innerHTML = "";
+    document.getElementById("contactEditResult").classList.remove("form-message--error");
+    document.getElementById("editContactPhone").classList.remove("form-input--error");
 
     // Get the ID from the hidden input field in the edit contact modal
     let contactID = document.getElementById("editContactId").value;
@@ -317,20 +333,30 @@ function editContact()
     let rawPhone = document.getElementById("editContactPhone").value;
     let newContactEmail = document.getElementById("editContactEmail").value;
 
-    // Validate that all fields are filled out
-    if( newContactFN == "" || newContactLN == "" || rawPhone == "" || newContactEmail == "" )
+
+    // Validate that first name is entered
+    if( newContactFN == "" )
     {
-        // Inform the user that all fields are required
-        document.getElementById("contactEditResult").innerHTML = "All fields are required";
+        document.getElementById("contactEditResult").innerHTML = "First name is required";
+        document.getElementById("contactEditResult").classList.add("form-message--error");
         return;
     }
-    
+
+    // Validate that phone number is entered
+    if( rawPhone == "" )
+    {
+        document.getElementById("contactEditResult").innerHTML = "Phone number is required";
+        document.getElementById("contactEditResult").classList.add("form-message--error");
+        return;
+    }
     // Clean phone number - remove all non-digit characters
     let cleanPhone = rawPhone.replace(/\D/g, '');
     
     // Validate phone number is exactly 10 digits
     if (cleanPhone.length !== 10) {
         document.getElementById("contactEditResult").innerHTML = "Please enter a valid 10-digit phone number";
+        document.getElementById("contactEditResult").classList.add("form-message--error");
+        document.getElementById("editContactPhone").classList.add("form-input--error");
         return;
     }
     
