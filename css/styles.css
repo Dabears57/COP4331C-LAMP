@@ -1072,4 +1072,10 @@ select {
         font-size: 24px;
     }
 
+    /* Move help button to right side on mobile to avoid overlap */
+    .top-bar__help-btn {
+        left: auto;
+        right: 15px;
+    }
+
 }
