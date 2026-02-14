@@ -239,6 +239,8 @@ function addContact()
     // Clear the previous result message and error styling
     document.getElementById("contactAddResult").innerHTML = "";
     document.getElementById("contactAddResult").classList.remove("form-message--error");
+    document.getElementById("contactFirstName").classList.remove("form-input--error");
+    document.getElementById("contactLastName").classList.remove("form-input--error");
     document.getElementById("contactPhone").classList.remove("form-input--error");
 
     // Get the values from contact form and create a JSON payload. 
@@ -253,6 +255,7 @@ function addContact()
     {
         document.getElementById("contactAddResult").innerHTML = "Phone number is required";
         document.getElementById("contactAddResult").classList.add("form-message--error");
+        document.getElementById("contactPhone").classList.add("form-input--error");
         return;
     }
 
@@ -261,6 +264,23 @@ function addContact()
     {
         document.getElementById("contactAddResult").innerHTML = "First name is required";
         document.getElementById("contactAddResult").classList.add("form-message--error");
+        document.getElementById("contactFirstName").classList.add("form-input--error");
+        return;
+    }
+    
+    // Validate first name length (max 50 characters)
+    if (newContactFN.length > 50) {
+        document.getElementById("contactAddResult").innerHTML = "First name must be less than 50 characters";
+        document.getElementById("contactAddResult").classList.add("form-message--error");
+        document.getElementById("contactFirstName").classList.add("form-input--error");
+        return;
+    }
+    
+    // Validate last name length (max 50 characters) if provided
+    if (newContactLN.length > 50) {
+        document.getElementById("contactAddResult").innerHTML = "Last name must be less than 50 characters";
+        document.getElementById("contactAddResult").classList.add("form-message--error");
+        document.getElementById("contactLastName").classList.add("form-input--error");
         return;
     }
     
@@ -322,6 +342,8 @@ function editContact()
     // Clear the previous result message and error styling
     document.getElementById("contactEditResult").innerHTML = "";
     document.getElementById("contactEditResult").classList.remove("form-message--error");
+    document.getElementById("editContactFirstName").classList.remove("form-input--error");
+    document.getElementById("editContactLastName").classList.remove("form-input--error");
     document.getElementById("editContactPhone").classList.remove("form-input--error");
 
     // Get the ID from the hidden input field in the edit contact modal
@@ -339,6 +361,7 @@ function editContact()
     {
         document.getElementById("contactEditResult").innerHTML = "First name is required";
         document.getElementById("contactEditResult").classList.add("form-message--error");
+        document.getElementById("editContactFirstName").classList.add("form-input--error");
         return;
     }
 
@@ -347,8 +370,26 @@ function editContact()
     {
         document.getElementById("contactEditResult").innerHTML = "Phone number is required";
         document.getElementById("contactEditResult").classList.add("form-message--error");
+        document.getElementById("editContactPhone").classList.add("form-input--error");
         return;
     }
+    
+    // Validate first name length (max 50 characters)
+    if (newContactFN.length > 50) {
+        document.getElementById("contactEditResult").innerHTML = "First name must be less than 50 characters";
+        document.getElementById("contactEditResult").classList.add("form-message--error");
+        document.getElementById("editContactFirstName").classList.add("form-input--error");
+        return;
+    }
+    
+    // Validate last name length (max 50 characters) if provided
+    if (newContactLN.length > 50) {
+        document.getElementById("contactEditResult").innerHTML = "Last name must be less than 50 characters";
+        document.getElementById("contactEditResult").classList.add("form-message--error");
+        document.getElementById("editContactLastName").classList.add("form-input--error");
+        return;
+    }
+    
     // Clean phone number - remove all non-digit characters
     let cleanPhone = rawPhone.replace(/\D/g, '');
     
