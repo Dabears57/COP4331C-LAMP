@@ -1075,5 +1075,13 @@ select {
     .top-bar__text--secondary {
         font-size: 24px;
     }
+    
+    /* Make help button smaller and closer to edge on mobile */
+    .top-bar__help-btn {
+        left: 8px;          /* Closer to left edge */
+        width: 32px;        /* Smaller button */
+        height: 32px;
+        font-size: 16px;    /* Smaller text */
+    }
 
 }
