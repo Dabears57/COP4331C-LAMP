@@ -174,6 +174,20 @@ function safeBack() {
     }
 }
 
+// Function to toggle password visibility
+function togglePasswordVisibility(inputId, button) {
+    const input = document.getElementById(inputId);
+    const eyeIcon = button.querySelector('.eye-icon');
+    
+    if (input.type === 'password') {
+        input.type = 'text';
+        eyeIcon.textContent = '👁‍🗨'; // Eye with speech bubble (viewing)
+    } else {
+        input.type = 'password';
+        eyeIcon.textContent = '👁'; // Regular eye (hidden)
+    }
+}
+
 function doLogout()
 {
 	userId = 0;

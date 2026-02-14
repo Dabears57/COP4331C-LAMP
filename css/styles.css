@@ -385,6 +385,49 @@ body > *:not(.top-bar) {
     box-shadow: 0 0 0 3px var(--color-primary-alpha-10);
 }
 
+/* Password Input Wrapper */
+.password-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-input-wrapper .form-input {
+    padding-right: 45px; /* Make room for the eye icon */
+}
+
+.password-toggle-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-secondary);
+    transition: color 0.2s ease;
+    font-size: 20px;
+    line-height: 1;
+}
+
+.password-toggle-btn:hover {
+    color: var(--color-primary);
+}
+
+.password-toggle-btn:focus {
+    outline: 2px solid var(--color-secondary);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+.eye-icon {
+    user-select: none;
+    pointer-events: none;
+}
+
 /* Override browser autofill styling */
 .form-input:-webkit-autofill,
 .form-input:-webkit-autofill:hover,
