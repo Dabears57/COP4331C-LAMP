@@ -21,6 +21,11 @@ function openAddModal()
 {
     document.getElementById("addContactModal").style.display = "block";
     document.getElementById("contactAddResult").innerHTML = "";
+    document.getElementById("contactAddResult").classList.remove("form-message--error");
+    document.getElementById("contactFirstName").classList.remove("form-input--error");
+    document.getElementById("contactLastName").classList.remove("form-input--error");
+    document.getElementById("contactPhone").classList.remove("form-input--error");
+    document.getElementById("contactEmail").classList.remove("form-input--error");
 }
 
 // Helper function to close the add contact modal
@@ -162,9 +167,14 @@ function openEditModalById(contactId)
     document.getElementById("editContactPhone").value = contact.phone;
     document.getElementById("editContactEmail").value = contact.email;
     
-    // Clear any previous messages
+    // Clear any previous messages and error styling
     document.getElementById("contactEditResult").innerHTML = "";
     document.getElementById("contactDeleteResult").innerHTML = "";
+    document.getElementById("contactEditResult").classList.remove("form-message--error");
+    document.getElementById("editContactFirstName").classList.remove("form-input--error");
+    document.getElementById("editContactLastName").classList.remove("form-input--error");
+    document.getElementById("editContactPhone").classList.remove("form-input--error");
+    document.getElementById("editContactEmail").classList.remove("form-input--error");
     
     // Show the modal
     document.getElementById("editContactModal").style.display = "block";
