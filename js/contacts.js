@@ -249,53 +249,60 @@ function addContact()
 	let rawPhone = document.getElementById("contactPhone").value;
 	let newContactEmail = document.getElementById("contactEmail").value;
     
+    // Collect all validation errors
+    let errors = [];
+    let hasError = false;
     
-    // Validate that phone number is entered
-    if( rawPhone == "" )
-    {
-        document.getElementById("contactAddResult").innerHTML = "Phone number is required";
-        document.getElementById("contactAddResult").classList.add("form-message--error");
-        document.getElementById("contactPhone").classList.add("form-input--error");
-        return;
-    }
-
     // Validate that first name is entered
     if( newContactFN == "" )
     {
-        document.getElementById("contactAddResult").innerHTML = "First name is required";
-        document.getElementById("contactAddResult").classList.add("form-message--error");
+        errors.push("first name");
         document.getElementById("contactFirstName").classList.add("form-input--error");
-        return;
+        hasError = true;
     }
-    
     // Validate first name length (max 50 characters)
-    if (newContactFN.length > 50) {
-        document.getElementById("contactAddResult").innerHTML = "First name must be less than 50 characters";
-        document.getElementById("contactAddResult").classList.add("form-message--error");
+    else if (newContactFN.length > 50) {
+        errors.push("first name must be 50 characters or less");
         document.getElementById("contactFirstName").classList.add("form-input--error");
-        return;
+        hasError = true;
     }
     
     // Validate last name length (max 50 characters) if provided
     if (newContactLN.length > 50) {
-        document.getElementById("contactAddResult").innerHTML = "Last name must be less than 50 characters";
-        document.getElementById("contactAddResult").classList.add("form-message--error");
+        errors.push("last name must be 50 characters or less");
         document.getElementById("contactLastName").classList.add("form-input--error");
-        return;
+        hasError = true;
     }
     
-    // Clean phone number - remove all non-digit characters
-    let cleanPhone = rawPhone.replace(/\D/g, '');
-    
-    // Validate phone number is exactly 10 digits
-    if (cleanPhone.length !== 10) {
-        document.getElementById("contactAddResult").innerHTML = "Please enter a valid 10-digit phone number";
-        document.getElementById("contactAddResult").classList.add("form-message--error");
+    // Validate that phone number is entered
+    if( rawPhone == "" )
+    {
+        errors.push("phone number");
         document.getElementById("contactPhone").classList.add("form-input--error");
+        hasError = true;
+    }
+    else {
+        // Clean phone number - remove all non-digit characters
+        let cleanPhone = rawPhone.replace(/\D/g, '');
+        
+        // Validate phone number is exactly 10 digits
+        if (cleanPhone.length !== 10) {
+            errors.push("valid 10-digit phone number");
+            document.getElementById("contactPhone").classList.add("form-input--error");
+            hasError = true;
+        }
+    }
+    
+    // If there are any errors, display them and return
+    if (hasError) {
+        let errorMessage = "Please enter: " + errors.join(", ");
+        document.getElementById("contactAddResult").innerHTML = errorMessage;
+        document.getElementById("contactAddResult").classList.add("form-message--error");
         return;
     }
     
-    // Format phone number to (XXX) XXX-XXXX
+    // Clean and format phone number
+    let cleanPhone = rawPhone.replace(/\D/g, '');
     let formattedPhone = '(' + cleanPhone.substring(0,3) + ') ' + cleanPhone.substring(3,6) + '-' + cleanPhone.substring(6,10);
     
 	let tmp = {firstName:newContactFN,
@@ -355,53 +362,60 @@ function editContact()
     let rawPhone = document.getElementById("editContactPhone").value;
     let newContactEmail = document.getElementById("editContactEmail").value;
 
+    // Collect all validation errors
+    let errors = [];
+    let hasError = false;
 
     // Validate that first name is entered
     if( newContactFN == "" )
     {
-        document.getElementById("contactEditResult").innerHTML = "First name is required";
-        document.getElementById("contactEditResult").classList.add("form-message--error");
+        errors.push("first name");
         document.getElementById("editContactFirstName").classList.add("form-input--error");
-        return;
+        hasError = true;
+    }
+    // Validate first name length (max 50 characters)
+    else if (newContactFN.length > 50) {
+        errors.push("first name must be 50 characters or less");
+        document.getElementById("editContactFirstName").classList.add("form-input--error");
+        hasError = true;
+    }
+    
+    // Validate last name length (max 50 characters) if provided
+    if (newContactLN.length > 50) {
+        errors.push("last name must be 50 characters or less");
+        document.getElementById("editContactLastName").classList.add("form-input--error");
+        hasError = true;
     }
 
     // Validate that phone number is entered
     if( rawPhone == "" )
     {
-        document.getElementById("contactEditResult").innerHTML = "Phone number is required";
-        document.getElementById("contactEditResult").classList.add("form-message--error");
+        errors.push("phone number");
         document.getElementById("editContactPhone").classList.add("form-input--error");
-        return;
+        hasError = true;
+    }
+    else {
+        // Clean phone number - remove all non-digit characters
+        let cleanPhone = rawPhone.replace(/\D/g, '');
+        
+        // Validate phone number is exactly 10 digits
+        if (cleanPhone.length !== 10) {
+            errors.push("valid 10-digit phone number");
+            document.getElementById("editContactPhone").classList.add("form-input--error");
+            hasError = true;
+        }
     }
     
-    // Validate first name length (max 50 characters)
-    if (newContactFN.length > 50) {
-        document.getElementById("contactEditResult").innerHTML = "First name must be less than 50 characters";
+    // If there are any errors, display them and return
+    if (hasError) {
+        let errorMessage = "Please enter: " + errors.join(", ");
+        document.getElementById("contactEditResult").innerHTML = errorMessage;
         document.getElementById("contactEditResult").classList.add("form-message--error");
-        document.getElementById("editContactFirstName").classList.add("form-input--error");
         return;
     }
     
-    // Validate last name length (max 50 characters) if provided
-    if (newContactLN.length > 50) {
-        document.getElementById("contactEditResult").innerHTML = "Last name must be less than 50 characters";
-        document.getElementById("contactEditResult").classList.add("form-message--error");
-        document.getElementById("editContactLastName").classList.add("form-input--error");
-        return;
-    }
-    
-    // Clean phone number - remove all non-digit characters
+    // Clean and format phone number
     let cleanPhone = rawPhone.replace(/\D/g, '');
-    
-    // Validate phone number is exactly 10 digits
-    if (cleanPhone.length !== 10) {
-        document.getElementById("contactEditResult").innerHTML = "Please enter a valid 10-digit phone number";
-        document.getElementById("contactEditResult").classList.add("form-message--error");
-        document.getElementById("editContactPhone").classList.add("form-input--error");
-        return;
-    }
-    
-    // Format phone number to (XXX) XXX-XXXX
     let formattedPhone = '(' + cleanPhone.substring(0,3) + ') ' + cleanPhone.substring(3,6) + '-' + cleanPhone.substring(6,10);
 
     let tmp = {contactId:contactID,
