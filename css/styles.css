@@ -399,6 +399,147 @@ body > *:not(.top-bar) {
 
 
 
+/* ===============================
+   TOP CONTROLS CONTAINER - CENTERED
+   =============================== */
+.top-controls {
+    display: flex;
+    flex-direction: column;      /* stack vertically */
+    align-items: center;         /* center horizontally */
+    gap: 12px;                   /* spacing between search and add button */
+    margin: 20px 0;
+}
+
+/* ===============================
+   SEARCH BAR - PILL SHAPE, RESPONSIVE
+   =============================== */
+.search-container {
+    display: flex;
+    width: clamp(300px, 50%, 500px);  /* responsive width */
+    height: 48px;
+    border-radius: 999px;             /* pill shape */
+    overflow: hidden;
+    background-color: var(--input-bg-color);
+    box-shadow: 0 0 0 1px rgba(155, 108, 255, 0.3);
+    transition: box-shadow 0.2s ease, width 0.2s ease;
+}
+
+/* Focus highlight */
+.search-container:focus-within {
+    box-shadow: 0 0 0 2px var(--color-primary-alpha-50);
+}
+
+/* INPUT - 3/4 of total pill, never smaller than 200px */
+.search-container input[type="text"] {
+    flex: 3 1 auto;                 /* grow 3 parts, shrink if needed */
+    min-width: 200px;                /* ensures input never too small */
+    padding: 12px 20px;
+    border: none;
+    outline: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    background-color: transparent;
+    color: var(--input-text-color);
+}
+
+/* BUTTON - 1/4 of total pill, never smaller than 48px */
+.search-container button {
+    flex: 1 0 auto;                  /* 1 part of 4, do not shrink */
+    min-width: 48px;                 /* ensures button always visible */
+    background-color: var(--color-primary);
+    color: var(--color-text-primary);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.search-container button:hover {
+    background-color: var(--color-secondary);
+    transform: translateY(-1px);
+}
+
+.search-container button:active {
+    transform: translateY(0);
+}
+
+/* Accessibility: focus outlines */
+.search-container input:focus-visible,
+.search-container button:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+/* ===============================
+   ADD CONTACT BUTTON - BELOW SEARCH
+   =============================== */
+.add-button {
+    width: clamp(150px, 20%, 200px); /* scales with screen */
+    height: 48px;                     /* match search bar height */
+    background-color: var(--color-primary);
+    color: var(--color-text-primary);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.add-button:hover {
+    background-color: var(--color-secondary);
+    transform: translateY(-1px);
+}
+
+.add-button:active {
+    transform: translateY(0);
+}
+
+.add-button:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+/* ===============================
+   RESPONSIVE FONT
+   =============================== */
+@media (max-width: 600px) {
+    .search-container input,
+    .search-container button,
+    .add-button {
+        font-size: 14px;
+        padding: 10px 14px;
+    }
+}
+
+
+.add-button:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+/* ===============================
+   RESPONSIVE FONT
+   =============================== */
+@media (max-width: 600px) {
+    .search-container input,
+    .search-container button,
+    .add-button {
+        font-size: 14px;
+        padding: 10px 14px;
+    }
+}
+
+
+
+
+
+
 
 
 /* ============================================
@@ -930,4 +1071,5 @@ select {
     .top-bar__text--secondary {
         font-size: 24px;
     }
+
 }
