@@ -30,8 +30,8 @@
 		<span id="contactSearchResult"></span>
 	</div>
 
-	<div id="table">
-		<table>
+	<div class = "table-container" id="table">
+		<table class = "table">
 			<thead>
 				<tr>
 					<th onclick="sortBy('firstName');">First Name</th>
@@ -47,7 +47,7 @@
 	</div>
 
 	<!-- Add Contact Modal -->
-	<div id="addContactModal" style="display:none;">
+	<div id="addContactModal">
 		<div class="modal-content">
 			<h2>Add New Contact</h2>
 			<input type="text" id="contactFirstName" placeholder="First Name" />
@@ -61,7 +61,7 @@
 	</div>
 
 	<!-- Edit Contact Modal -->
-	<div id="editContactModal" style="display:none;">
+	<div id="editContactModal" >
 		<div class="modal-content">
 			<h2>Edit Contact</h2>
 			<input type="hidden" id="editContactId" />
@@ -80,4 +80,5 @@
 </body>
 
 </html>
+
 
