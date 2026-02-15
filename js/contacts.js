@@ -38,6 +38,9 @@ function openAddModal()
     document.getElementById("contactLastName").classList.remove("form-input--error");
     document.getElementById("contactPhone").classList.remove("form-input--error");
     document.getElementById("contactEmail").classList.remove("form-input--error");
+    document.getElementById("contactAddress").classList.remove("form-input--error");
+    document.getElementById("contactCompany").classList.remove("form-input--error");
+    document.getElementById("contactNote").classList.remove("form-input--error");
 }
 
 // Helper function to close the add contact modal
@@ -48,6 +51,9 @@ function closeAddModal()
     document.getElementById("contactLastName").value = "";
     document.getElementById("contactPhone").value = "";
     document.getElementById("contactEmail").value = "";
+    document.getElementById("contactAddress").value = "";
+    document.getElementById("contactCompany").value = "";
+    document.getElementById("contactNote").value = "";
     document.getElementById("contactAddResult").innerHTML = "";
 }
 
@@ -178,6 +184,9 @@ function openEditModalById(contactId)
     document.getElementById("editContactLastName").value = contact.lastName;
     document.getElementById("editContactPhone").value = contact.phone;
     document.getElementById("editContactEmail").value = contact.email;
+    document.getElementById("editContactAddress").value = contact.address || "";
+    document.getElementById("editContactCompany").value = contact.company || "";
+    document.getElementById("editContactNote").value = contact.note || "";
     
     // Clear any previous messages and error styling
     document.getElementById("contactEditResult").innerHTML = "";
@@ -187,6 +196,9 @@ function openEditModalById(contactId)
     document.getElementById("editContactLastName").classList.remove("form-input--error");
     document.getElementById("editContactPhone").classList.remove("form-input--error");
     document.getElementById("editContactEmail").classList.remove("form-input--error");
+    document.getElementById("editContactAddress").classList.remove("form-input--error");
+    document.getElementById("editContactCompany").classList.remove("form-input--error");
+    document.getElementById("editContactNote").classList.remove("form-input--error");
     
     // Show the modal
     document.getElementById("editContactModal").style.display = "block";
@@ -264,12 +276,18 @@ function addContact()
     document.getElementById("contactFirstName").classList.remove("form-input--error");
     document.getElementById("contactLastName").classList.remove("form-input--error");
     document.getElementById("contactPhone").classList.remove("form-input--error");
+    document.getElementById("contactAddress").classList.remove("form-input--error");
+    document.getElementById("contactCompany").classList.remove("form-input--error");
+    document.getElementById("contactNote").classList.remove("form-input--error");
 
     // Get the values from contact form and create a JSON payload. 
 	let newContactFN = document.getElementById("contactFirstName").value;
 	let newContactLN = document.getElementById("contactLastName").value;
 	let rawPhone = document.getElementById("contactPhone").value;
 	let newContactEmail = document.getElementById("contactEmail").value;
+	let newContactAddress = document.getElementById("contactAddress").value;
+	let newContactCompany = document.getElementById("contactCompany").value;
+	let newContactNote = document.getElementById("contactNote").value;
     
     // Collect all validation errors
     let errors = [];
@@ -293,6 +311,27 @@ function addContact()
     if (newContactLN.length > 50) {
         errors.push("last name must be 50 characters or less");
         document.getElementById("contactLastName").classList.add("form-input--error");
+        hasError = true;
+    }
+    
+    // Validate address length (max 255 characters) if provided
+    if (newContactAddress.length > 255) {
+        errors.push("address must be 255 characters or less");
+        document.getElementById("contactAddress").classList.add("form-input--error");
+        hasError = true;
+    }
+    
+    // Validate company length (max 100 characters) if provided
+    if (newContactCompany.length > 100) {
+        errors.push("company must be 100 characters or less");
+        document.getElementById("contactCompany").classList.add("form-input--error");
+        hasError = true;
+    }
+    
+    // Validate note length (max 255 characters) if provided
+    if (newContactNote.length > 255) {
+        errors.push("note must be 255 characters or less");
+        document.getElementById("contactNote").classList.add("form-input--error");
         hasError = true;
     }
     
@@ -331,6 +370,9 @@ function addContact()
         lastName:newContactLN,
         phone:formattedPhone,
         email:newContactEmail,
+        address:newContactAddress,
+        company:newContactCompany,
+        note:newContactNote,
         userId:userId};
 	let jsonPayload = JSON.stringify( tmp );
 
@@ -374,6 +416,9 @@ function editContact()
     document.getElementById("editContactFirstName").classList.remove("form-input--error");
     document.getElementById("editContactLastName").classList.remove("form-input--error");
     document.getElementById("editContactPhone").classList.remove("form-input--error");
+    document.getElementById("editContactAddress").classList.remove("form-input--error");
+    document.getElementById("editContactCompany").classList.remove("form-input--error");
+    document.getElementById("editContactNote").classList.remove("form-input--error");
 
     // Get the ID from the hidden input field in the edit contact modal
     let contactID = document.getElementById("editContactId").value;
@@ -383,6 +428,9 @@ function editContact()
     let newContactLN = document.getElementById("editContactLastName").value;
     let rawPhone = document.getElementById("editContactPhone").value;
     let newContactEmail = document.getElementById("editContactEmail").value;
+    let newContactAddress = document.getElementById("editContactAddress").value;
+    let newContactCompany = document.getElementById("editContactCompany").value;
+    let newContactNote = document.getElementById("editContactNote").value;
 
     // Collect all validation errors
     let errors = [];
@@ -406,6 +454,27 @@ function editContact()
     if (newContactLN.length > 50) {
         errors.push("last name must be 50 characters or less");
         document.getElementById("editContactLastName").classList.add("form-input--error");
+        hasError = true;
+    }
+    
+    // Validate address length (max 255 characters) if provided
+    if (newContactAddress.length > 255) {
+        errors.push("address must be 255 characters or less");
+        document.getElementById("editContactAddress").classList.add("form-input--error");
+        hasError = true;
+    }
+    
+    // Validate company length (max 100 characters) if provided
+    if (newContactCompany.length > 100) {
+        errors.push("company must be 100 characters or less");
+        document.getElementById("editContactCompany").classList.add("form-input--error");
+        hasError = true;
+    }
+    
+    // Validate note length (max 255 characters) if provided
+    if (newContactNote.length > 255) {
+        errors.push("note must be 255 characters or less");
+        document.getElementById("editContactNote").classList.add("form-input--error");
         hasError = true;
     }
 
@@ -445,6 +514,9 @@ function editContact()
         lastName:newContactLN,
         phone:formattedPhone,
         email:newContactEmail,
+        address:newContactAddress,
+        company:newContactCompany,
+        note:newContactNote,
         userId:userId};
     let jsonPayload = JSON.stringify( tmp );
 
