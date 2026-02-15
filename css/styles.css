@@ -1116,27 +1116,50 @@ body > *:not(.top-bar) {
     transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
-/* Primary action buttons (Save, Close in view mode) */
-.modal-content button:not(.modal-action-btn):not(.btn-confirm-delete):not(.btn-confirm-cancel):first-of-type,
+/* Close button in view mode - full width */
 #closeViewBtn {
+    width: 100%;
     background: var(--color-primary);
     color: var(--color-text-primary);
 }
 
-.modal-content button:not(.modal-action-btn):not(.btn-confirm-delete):not(.btn-confirm-cancel):first-of-type:hover,
 #closeViewBtn:hover {
     background: var(--color-secondary);
     transform: translateY(-2px);
 }
 
-/* Cancel button (secondary action) */
-.modal-content button:not(.modal-action-btn):not(.btn-confirm-delete):not(.btn-confirm-cancel):last-of-type {
+/* Modal button group for side-by-side buttons */
+.modal-button-group {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.modal-button-group button {
+    flex: 1;
+    margin-top: 0;
+}
+
+/* Save button in edit mode */
+.modal-button-group button:first-child {
+    background: var(--color-primary);
+    color: var(--color-text-primary);
+}
+
+.modal-button-group button:first-child:hover {
+    background: var(--color-secondary);
+    transform: translateY(-2px);
+}
+
+/* Cancel button in edit mode */
+.modal-button-group button:last-child {
     background: rgba(255, 255, 255, 0.08);
     color: var(--color-text-secondary);
 }
 
-.modal-content button:not(.modal-action-btn):not(.btn-confirm-delete):not(.btn-confirm-cancel):last-of-type:hover {
+.modal-button-group button:last-child:hover {
     background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
 }
 
 /* ============================================
