@@ -935,8 +935,8 @@ body > *:not(.top-bar) {
     margin: 0 !important;
     border-radius: 50%;
     background-color: transparent !important;
-    border: 2px solid var(--color-text-disabled) !important;
-    color: var(--color-text-disabled);
+    border: 2px solid var(--color-primary) !important;
+    color: var(--color-primary);
     display: flex;
     align-items: center;
     justify-content: center;
