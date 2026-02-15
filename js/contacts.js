@@ -65,6 +65,31 @@ function closeEditModal()
     document.getElementById("contactDeleteResult").innerHTML = "";
 }
 
+// Helper function to show the delete confirmation modal
+function showDeleteConfirm()
+{
+    document.getElementById("deleteConfirmModal").style.display = "block";
+}
+
+// Helper function to close the delete confirmation modal
+function closeDeleteConfirm()
+{
+    document.getElementById("deleteConfirmModal").style.display = "none";
+}
+
+// Function to confirm and execute the delete
+function confirmDelete()
+{
+    // Get the contact ID from the edit modal
+    let contactID = document.getElementById("editContactId").value;
+    
+    // Close the confirmation modal
+    closeDeleteConfirm();
+    
+    // Execute the delete
+    deleteContact(contactID);
+}
+
 // Helper function to escape HTML and prevent XSS attacks (written by Cursor) 
 function escapeHtml(text) {
     const div = document.createElement('div');
@@ -228,10 +253,6 @@ function deleteContact(contactID)
     // Clear the previous result message
     document.getElementById("contactDeleteResult").innerHTML = "";
 
-    // Show confirmation popup before deleting
-    if (!confirm("Are you sure you want to delete this contact?")) {
-        return;
-    }
     // Create a temporary object + JSON payload to send to the API 
     let tmp = {contactId:contactID,userId:userId};
     let jsonPayload = JSON.stringify( tmp );

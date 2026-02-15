@@ -101,12 +101,24 @@
 		</div>
 	</div>
 
+	<!-- Delete Confirmation Modal -->
+	<div id="deleteConfirmModal">
+		<div class="modal-content modal-content--small">
+			<h2>Delete Contact</h2>
+			<p class="confirm-message">Are you sure you would like to delete this contact?</p>
+			<div class="confirm-buttons">
+				<button type="button" class="btn-confirm-delete" onclick="confirmDelete();">Delete</button>
+				<button type="button" class="btn-confirm-cancel" onclick="closeDeleteConfirm();">Cancel</button>
+			</div>
+		</div>
+	</div>
+
 	<!-- Edit Contact Modal -->
 	<div id="editContactModal">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h2>Edit Contact</h2>
-				<button type="button" class="modal-delete-btn" onclick="deleteContact(document.getElementById('editContactId').value);" aria-label="Delete Contact" title="Delete Contact">
+				<button type="button" class="modal-delete-btn" onclick="showDeleteConfirm();" aria-label="Delete Contact" title="Delete Contact">
 					<span class="delete-icon">✕</span>
 				</button>
 			</div>

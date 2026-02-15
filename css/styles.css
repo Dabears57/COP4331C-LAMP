@@ -892,6 +892,12 @@ body > *:not(.top-bar) {
     gap: 0;
 }
 
+/* Smaller modal for confirmations */
+.modal-content--small {
+    max-width: 400px;
+    text-align: center;
+}
+
 /* ============================================
    MODAL HEADER (for title + delete button)
    ============================================ */
@@ -1056,6 +1062,58 @@ body > *:not(.top-bar) {
 
 .modal-content button:not(.modal-delete-btn):last-of-type:hover {
     background: rgba(255, 255, 255, 0.15);
+}
+
+/* ============================================
+   CONFIRMATION MODAL STYLES
+   ============================================ */
+
+.confirm-message {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    color: var(--color-text-primary);
+    margin: 0 0 24px 0;
+    line-height: 1.5;
+}
+
+.confirm-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.btn-confirm-delete,
+.btn-confirm-cancel {
+    flex: 1;
+    max-width: 150px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-confirm-delete {
+    background-color: var(--color-error);
+    color: white;
+}
+
+.btn-confirm-delete:hover {
+    background-color: #cc0000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 68, 68, 0.4);
+}
+
+.btn-confirm-cancel {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: var(--color-text-secondary);
+}
+
+.btn-confirm-cancel:hover {
+    background-color: rgba(255, 255, 255, 0.15);
 }
 
 /* ============================================
