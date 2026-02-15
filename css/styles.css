@@ -669,6 +669,9 @@ body > *:not(.top-bar) {
 
 .table-container {
     max-height: 500px; /* adjust as needed */
+    max-width: 1200px;  /* maximum width for the table */
+    margin: 0 auto;     /* center the table horizontally */
+    padding: 0 40px;    /* space on left and right sides */
     overflow-y: auto;
     border-radius: 12px;
 }
