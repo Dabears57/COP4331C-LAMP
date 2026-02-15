@@ -671,6 +671,9 @@ body > *:not(.top-bar) {
     max-height: 500px;
     margin: 0 20px;     /* 20px margin on left and right sides */
     overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 12px;
+    background-color: var(--color-bg-medium);
 }
 
 /* ============================================
@@ -683,18 +686,19 @@ body > *:not(.top-bar) {
     border-spacing: 0;
     background-color: var(--color-bg-medium);
     font-family: 'Montserrat', sans-serif;
-    border-radius: 12px;
-    overflow: hidden;
 }
 
 /* ============================================
    STICKY HEADER
    ============================================ */
 
-.table thead th {
+.table thead {
     position: sticky;
     top: 0;
     z-index: 10;
+}
+
+.table thead th {
     background-color: var(--color-bg-light);
     padding: 16px;
     text-align: left;
