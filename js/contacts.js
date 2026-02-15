@@ -12,6 +12,18 @@ function loadPage()
     {
         window.location.href = "index.html";
     }
+    
+    // Add Enter key support for search input
+    const searchInput = document.getElementById("searchText");
+    if (searchInput) {
+        searchInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                searchContacts();
+            }
+        });
+    }
+    
     // Start searching the contacts to load them. 
     searchContacts();
 }
