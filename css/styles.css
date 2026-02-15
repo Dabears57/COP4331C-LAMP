@@ -898,10 +898,11 @@ body > *:not(.top-bar) {
 
 .modal-header {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     margin-bottom: 24px;
     position: relative;
+    gap: 16px;
 }
 
 /* ============================================
@@ -915,6 +916,7 @@ body > *:not(.top-bar) {
     color: var(--color-text-primary);
     flex: 1;
     text-align: left;
+    line-height: 1.2;
 }
 
 /* For Add Contact modal (no header wrapper) */
