@@ -694,7 +694,7 @@ body > *:not(.top-bar) {
 .table thead th {
     position: sticky;
     top: 0;
-    z-index: 2;
+    z-index: 10;
     background-color: var(--color-bg-light);
     padding: 16px;
     text-align: left;
@@ -703,6 +703,7 @@ body > *:not(.top-bar) {
     letter-spacing: 1px;
     color: var(--color-primary);
     border-bottom: 2px solid var(--color-primary-alpha-50);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* Round the top corners of the header */
