@@ -668,8 +668,8 @@ body > *:not(.top-bar) {
    ============================================ */
 
 .table-container {
-    height: calc(100vh - 220px);       /* Fill viewport minus space for header/controls/margins */
     margin: 0 20px 20px 20px;          /* 20px margin on all sides for consistency */
+    max-height: 70vh;                  /* Maximum 70% of viewport height - responsive to all screens */
     overflow-y: auto;
     overflow-x: hidden;
     border-radius: 12px;
