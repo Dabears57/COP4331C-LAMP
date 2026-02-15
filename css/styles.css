@@ -935,8 +935,8 @@ body > *:not(.top-bar) {
     margin: 0 !important;
     border-radius: 50%;
     background-color: transparent !important;
-    border: 2px solid var(--color-error) !important;
-    color: var(--color-error);
+    border: 2px solid var(--color-text-disabled) !important;
+    color: var(--color-text-disabled);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -947,6 +947,7 @@ body > *:not(.top-bar) {
 
 .modal-delete-btn:hover {
     background-color: var(--color-error) !important;
+    border-color: var(--color-error) !important;
     color: white;
     transform: scale(1.1);
     box-shadow: 0 4px 12px rgba(255, 68, 68, 0.4);
@@ -960,7 +961,8 @@ body > *:not(.top-bar) {
 .delete-icon {
     user-select: none;
     pointer-events: none;
-    font-size: 20px;
+    font-size: 24px;
+    font-weight: 700;
     line-height: 1;
 }
 
