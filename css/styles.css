@@ -138,6 +138,9 @@ body
     background-color: var(--color-bg-dark);
     margin: 0;
     padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Custom Scrollbar for Webkit browsers (Chrome, Safari, Edge) */
@@ -669,7 +672,8 @@ body > *:not(.top-bar) {
 
 .table-container {
     margin: 0 20px 20px 20px;          /* 20px margin on all sides for consistency */
-    max-height: 70vh;                  /* Maximum 70% of viewport height - responsive to all screens */
+    flex: 1;                           /* Grow to fill available space */
+    min-height: 0;                     /* Allow flexbox to shrink properly */
     overflow-y: auto;
     overflow-x: hidden;
     border-radius: 12px;
