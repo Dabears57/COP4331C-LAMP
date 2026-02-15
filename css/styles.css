@@ -668,8 +668,8 @@ body > *:not(.top-bar) {
    ============================================ */
 
 .table-container {
-    max-height: 500px;
-    margin: 0 20px;     /* 20px margin on left and right sides */
+    max-height: 600px;                 /* Maximum height before scrolling - adjust as needed */
+    margin: 0 20px 20px 20px;          /* 20px margin on all sides for consistency */
     overflow-y: auto;
     overflow-x: hidden;
     border-radius: 12px;
