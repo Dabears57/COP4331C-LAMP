@@ -57,12 +57,14 @@ function closeAddModal()
     document.getElementById("contactAddResult").innerHTML = "";
 }
 
-// Helper function to close the edit contact modal
-function closeEditModal()
+// Helper function to close the view/edit contact modal
+function closeViewModal()
 {
-    document.getElementById("editContactModal").style.display = "none";
+    document.getElementById("viewContactModal").style.display = "none";
     document.getElementById("contactEditResult").innerHTML = "";
     document.getElementById("contactDeleteResult").innerHTML = "";
+    // Reset to view mode when closing
+    exitEditMode();
 }
 
 // Helper function to show the delete confirmation modal
@@ -80,14 +82,80 @@ function closeDeleteConfirm()
 // Function to confirm and execute the delete
 function confirmDelete()
 {
-    // Get the contact ID from the edit modal
-    let contactID = document.getElementById("editContactId").value;
+    // Get the contact ID from the view modal
+    let contactID = document.getElementById("viewContactId").value;
     
     // Close the confirmation modal
     closeDeleteConfirm();
     
     // Execute the delete
     deleteContact(contactID);
+}
+
+// Function to enter edit mode
+function enterEditMode()
+{
+    // Change title
+    document.getElementById("contactModalTitle").textContent = "Edit Contact";
+    
+    // Hide view mode content
+    document.getElementById("viewModeContent").style.display = "none";
+    
+    // Show edit mode content
+    document.getElementById("editModeContent").style.display = "block";
+    
+    // Hide edit button, keep delete button
+    document.getElementById("editContactBtn").style.display = "none";
+}
+
+// Function to exit edit mode (return to view mode)
+function exitEditMode()
+{
+    // Change title
+    document.getElementById("contactModalTitle").textContent = "View Contact";
+    
+    // Show view mode content
+    document.getElementById("viewModeContent").style.display = "block";
+    
+    // Hide edit mode content
+    document.getElementById("editModeContent").style.display = "none";
+    
+    // Show edit button
+    document.getElementById("editContactBtn").style.display = "flex";
+    
+    // Clear any error messages
+    document.getElementById("contactEditResult").innerHTML = "";
+}
+
+// Function to cancel edit and return to view mode
+function cancelEdit()
+{
+    // Get the contact ID
+    let contactID = document.getElementById("viewContactId").value;
+    
+    // Find the contact to restore original values
+    let contact = contactsData.find(c => c.contactId == contactID);
+    
+    if (contact) {
+        // Restore original values in edit inputs
+        document.getElementById("editContactFirstName").value = contact.firstName;
+        document.getElementById("editContactLastName").value = contact.lastName || "";
+        document.getElementById("editContactPhone").value = contact.phone;
+        document.getElementById("editContactEmail").value = contact.email || "";
+        document.getElementById("editContactAddress").value = contact.address || "";
+        document.getElementById("editContactCompany").value = contact.company || "";
+        document.getElementById("editContactNote").value = contact.note || "";
+    }
+    
+    // Return to view mode
+    exitEditMode();
+}
+
+// Function to save contact changes
+function saveContact()
+{
+    // Call the existing editContact function
+    editContact();
 }
 
 // Helper function to escape HTML and prevent XSS attacks (written by Cursor) 
@@ -193,7 +261,7 @@ function renderTable(data)
     document.getElementById("contactTableBody").innerHTML = contactList;
 }
 
-// Helper function to open edit modal by contact ID
+// Helper function to open view modal by contact ID
 function openEditModalById(contactId)
 {
     // Find the contact in the contactsData array
@@ -203,12 +271,23 @@ function openEditModalById(contactId)
         return;
     }
     
-    // Save the ID and populate the form
-    document.getElementById("editContactId").value = contactId;
+    // Save the ID
+    document.getElementById("viewContactId").value = contactId;
+    
+    // Populate view mode with contact data
+    document.getElementById("viewFirstName").textContent = contact.firstName;
+    document.getElementById("viewLastName").textContent = contact.lastName || "";
+    document.getElementById("viewPhone").textContent = contact.phone;
+    document.getElementById("viewEmail").textContent = contact.email || "";
+    document.getElementById("viewAddress").textContent = contact.address || "";
+    document.getElementById("viewCompany").textContent = contact.company || "";
+    document.getElementById("viewNote").textContent = contact.note || "";
+    
+    // Populate edit mode inputs (hidden initially)
     document.getElementById("editContactFirstName").value = contact.firstName;
-    document.getElementById("editContactLastName").value = contact.lastName;
+    document.getElementById("editContactLastName").value = contact.lastName || "";
     document.getElementById("editContactPhone").value = contact.phone;
-    document.getElementById("editContactEmail").value = contact.email;
+    document.getElementById("editContactEmail").value = contact.email || "";
     document.getElementById("editContactAddress").value = contact.address || "";
     document.getElementById("editContactCompany").value = contact.company || "";
     document.getElementById("editContactNote").value = contact.note || "";
@@ -225,8 +304,11 @@ function openEditModalById(contactId)
     document.getElementById("editContactCompany").classList.remove("form-input--error");
     document.getElementById("editContactNote").classList.remove("form-input--error");
     
+    // Ensure we're in view mode
+    exitEditMode();
+    
     // Show the modal
-    document.getElementById("editContactModal").style.display = "block";
+    document.getElementById("viewContactModal").style.display = "block";
 }
 
 // Assisted by Cursor 
@@ -271,8 +353,8 @@ function deleteContact(contactID)
         {
             if (this.readyState == 4 && this.status == 200) 
             {
-                // Close the edit modal
-                closeEditModal();
+                // Close the view modal
+                closeViewModal();
 
                 // Reload the contacts to update with contact deleted.  
                 searchContacts(); 
@@ -441,8 +523,8 @@ function editContact()
     document.getElementById("editContactCompany").classList.remove("form-input--error");
     document.getElementById("editContactNote").classList.remove("form-input--error");
 
-    // Get the ID from the hidden input field in the edit contact modal
-    let contactID = document.getElementById("editContactId").value;
+    // Get the ID from the hidden input field in the view contact modal
+    let contactID = document.getElementById("viewContactId").value;
 
     // Get the values from contact form and create a JSON payload
     let newContactFN = document.getElementById("editContactFirstName").value;
@@ -555,11 +637,20 @@ function editContact()
         {
             if (this.readyState == 4 && this.status == 200) 
             {
-                // Close the edit contact modal
-                closeEditModal();
-
                 // Reload the contacts to update with edited contact
                 searchContacts();
+                
+                // Update the view mode display with new values
+                document.getElementById("viewFirstName").textContent = newContactFN;
+                document.getElementById("viewLastName").textContent = newContactLN;
+                document.getElementById("viewPhone").textContent = formattedPhone;
+                document.getElementById("viewEmail").textContent = newContactEmail;
+                document.getElementById("viewAddress").textContent = newContactAddress;
+                document.getElementById("viewCompany").textContent = newContactCompany;
+                document.getElementById("viewNote").textContent = newContactNote;
+                
+                // Return to view mode
+                exitEditMode();
             }
         };
         xhr.send(jsonPayload);

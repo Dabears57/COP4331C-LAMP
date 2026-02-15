@@ -857,7 +857,7 @@ body > *:not(.top-bar) {
    ============================================ */
 
 #addContactModal,
-#editContactModal {
+#viewContactModal {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.55);
@@ -883,7 +883,7 @@ body > *:not(.top-bar) {
 
 /* When JS sets display:block, this makes it flex */
 #addContactModal[style*="block"],
-#editContactModal[style*="block"],
+#viewContactModal[style*="block"],
 #deleteConfirmModal[style*="block"] {
     display: flex !important;
 }
@@ -945,10 +945,16 @@ body > *:not(.top-bar) {
 }
 
 /* ============================================
-   MODAL DELETE BUTTON (top right corner)
+   MODAL HEADER BUTTONS (edit and delete)
    ============================================ */
 
-.modal-delete-btn {
+.modal-header-buttons {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.modal-action-btn {
     width: 40px !important;
     height: 40px !important;
     min-width: 40px;
@@ -966,20 +972,34 @@ body > *:not(.top-bar) {
     flex-shrink: 0;
 }
 
-.modal-delete-btn:hover {
+.modal-action-btn:hover {
+    background-color: var(--color-primary) !important;
+    color: var(--color-text-primary);
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(142, 97, 255, 0.4);
+}
+
+/* Delete button specific hover (red) */
+.modal-action-btn:hover .delete-icon {
+    color: white;
+}
+
+#deleteContactBtn:hover {
     background-color: var(--color-error) !important;
     border-color: var(--color-error) !important;
-    color: white;
-    transform: scale(1.1);
+}
+
+#deleteContactBtn:hover {
     box-shadow: 0 4px 12px rgba(255, 68, 68, 0.4);
 }
 
-.modal-delete-btn:focus {
-    outline: 2px solid var(--color-error);
+.modal-action-btn:focus {
+    outline: 2px solid var(--color-secondary);
     outline-offset: 2px;
 }
 
-.delete-icon {
+.delete-icon,
+.edit-icon {
     user-select: none;
     pointer-events: none;
     font-size: 24px;
@@ -988,7 +1008,47 @@ body > *:not(.top-bar) {
 }
 
 /* ============================================
-   MODAL FORM GROUPS
+   VIEW MODE INFO GROUPS
+   ============================================ */
+
+.info-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.info-label {
+    flex-shrink: 0;
+    width: 130px;
+    text-align: right;
+    color: var(--label-color);
+    font-family: 'Montserrat', sans-serif;
+    font-size: var(--label-font-size);
+    font-weight: var(--label-font-weight);
+    letter-spacing: 0.5px;
+}
+
+.info-value {
+    flex: 1;
+    color: var(--color-text-primary);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    padding: 14px 16px;
+    background-color: var(--color-bg-dark);
+    border-radius: 8px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+}
+
+.info-value:empty::before {
+    content: '—';
+    color: var(--color-text-disabled);
+}
+
+/* ============================================
+   MODAL FORM GROUPS (Edit Mode)
    ============================================ */
 
 .modal-content .form-group {
@@ -1056,24 +1116,26 @@ body > *:not(.top-bar) {
     transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
-/* Save button (primary action) */
-.modal-content button:not(.modal-delete-btn):first-of-type {
+/* Primary action buttons (Save, Close in view mode) */
+.modal-content button:not(.modal-action-btn):not(.btn-confirm-delete):not(.btn-confirm-cancel):first-of-type,
+#closeViewBtn {
     background: var(--color-primary);
     color: var(--color-text-primary);
 }
 
-.modal-content button:not(.modal-delete-btn):first-of-type:hover {
+.modal-content button:not(.modal-action-btn):not(.btn-confirm-delete):not(.btn-confirm-cancel):first-of-type:hover,
+#closeViewBtn:hover {
     background: var(--color-secondary);
     transform: translateY(-2px);
 }
 
 /* Cancel button (secondary action) */
-.modal-content button:not(.modal-delete-btn):last-of-type {
+.modal-content button:not(.modal-action-btn):not(.btn-confirm-delete):not(.btn-confirm-cancel):last-of-type {
     background: rgba(255, 255, 255, 0.08);
     color: var(--color-text-secondary);
 }
 
-.modal-content button:not(.modal-delete-btn):last-of-type:hover {
+.modal-content button:not(.modal-action-btn):not(.btn-confirm-delete):not(.btn-confirm-cancel):last-of-type:hover {
     background: rgba(255, 255, 255, 0.15);
 }
 

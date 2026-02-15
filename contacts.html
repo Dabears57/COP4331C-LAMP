@@ -113,47 +113,90 @@
 		</div>
 	</div>
 
-	<!-- Edit Contact Modal -->
-	<div id="editContactModal">
+	<!-- View/Edit Contact Modal -->
+	<div id="viewContactModal">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h2>Edit Contact</h2>
-				<button type="button" class="modal-delete-btn" onclick="showDeleteConfirm();" aria-label="Delete Contact" title="Delete Contact">
-					<span class="delete-icon">✕</span>
-				</button>
+				<h2 id="contactModalTitle">View Contact</h2>
+				<div class="modal-header-buttons">
+					<button type="button" id="editContactBtn" class="modal-action-btn" onclick="enterEditMode();" aria-label="Edit Contact" title="Edit Contact">
+						<span class="edit-icon">✎</span>
+					</button>
+					<button type="button" id="deleteContactBtn" class="modal-action-btn" onclick="showDeleteConfirm();" aria-label="Delete Contact" title="Delete Contact">
+						<span class="delete-icon">✕</span>
+					</button>
+				</div>
 			</div>
-			<input type="hidden" id="editContactId">
-			<div class="form-group">
-				<label for="editContactFirstName" class="form-label">First Name</label>
-				<input type="text" id="editContactFirstName" class="form-input" placeholder="First Name">
+			<input type="hidden" id="viewContactId">
+			
+			<!-- View Mode Content -->
+			<div id="viewModeContent">
+				<div class="info-group">
+					<label class="info-label">First Name</label>
+					<span class="info-value" id="viewFirstName"></span>
+				</div>
+				<div class="info-group">
+					<label class="info-label">Last Name</label>
+					<span class="info-value" id="viewLastName"></span>
+				</div>
+				<div class="info-group">
+					<label class="info-label">Phone Number</label>
+					<span class="info-value" id="viewPhone"></span>
+				</div>
+				<div class="info-group">
+					<label class="info-label">Email Address</label>
+					<span class="info-value" id="viewEmail"></span>
+				</div>
+				<div class="info-group">
+					<label class="info-label">Address</label>
+					<span class="info-value" id="viewAddress"></span>
+				</div>
+				<div class="info-group">
+					<label class="info-label">Company</label>
+					<span class="info-value" id="viewCompany"></span>
+				</div>
+				<div class="info-group">
+					<label class="info-label">Note</label>
+					<span class="info-value" id="viewNote"></span>
+				</div>
+				<button type="button" id="closeViewBtn" onclick="closeViewModal();">Close</button>
 			</div>
-			<div class="form-group">
-				<label for="editContactLastName" class="form-label">Last Name</label>
-				<input type="text" id="editContactLastName" class="form-input" placeholder="Last Name">
+			
+			<!-- Edit Mode Content -->
+			<div id="editModeContent" style="display: none;">
+				<div class="form-group">
+					<label for="editContactFirstName" class="form-label">First Name</label>
+					<input type="text" id="editContactFirstName" class="form-input" placeholder="First Name">
+				</div>
+				<div class="form-group">
+					<label for="editContactLastName" class="form-label">Last Name</label>
+					<input type="text" id="editContactLastName" class="form-input" placeholder="Last Name">
+				</div>
+				<div class="form-group">
+					<label for="editContactPhone" class="form-label">Phone Number</label>
+					<input type="text" id="editContactPhone" class="form-input" placeholder="Phone Number">
+				</div>
+				<div class="form-group">
+					<label for="editContactEmail" class="form-label">Email Address</label>
+					<input type="text" id="editContactEmail" class="form-input" placeholder="Email">
+				</div>
+				<div class="form-group">
+					<label for="editContactAddress" class="form-label">Address</label>
+					<input type="text" id="editContactAddress" class="form-input" placeholder="Address (optional)">
+				</div>
+				<div class="form-group">
+					<label for="editContactCompany" class="form-label">Company</label>
+					<input type="text" id="editContactCompany" class="form-input" placeholder="Company (optional)">
+				</div>
+				<div class="form-group">
+					<label for="editContactNote" class="form-label">Note</label>
+					<input type="text" id="editContactNote" class="form-input" placeholder="Note (optional)">
+				</div>
+				<button type="button" onclick="saveContact();">Save</button>
+				<button type="button" onclick="cancelEdit();">Cancel</button>
+				<span id="contactEditResult"></span>
 			</div>
-			<div class="form-group">
-				<label for="editContactPhone" class="form-label">Phone Number</label>
-				<input type="text" id="editContactPhone" class="form-input" placeholder="Phone Number">
-			</div>
-			<div class="form-group">
-				<label for="editContactEmail" class="form-label">Email Address</label>
-				<input type="text" id="editContactEmail" class="form-input" placeholder="Email">
-			</div>
-			<div class="form-group">
-				<label for="editContactAddress" class="form-label">Address</label>
-				<input type="text" id="editContactAddress" class="form-input" placeholder="Address (optional)">
-			</div>
-			<div class="form-group">
-				<label for="editContactCompany" class="form-label">Company</label>
-				<input type="text" id="editContactCompany" class="form-input" placeholder="Company (optional)">
-			</div>
-			<div class="form-group">
-				<label for="editContactNote" class="form-label">Note</label>
-				<input type="text" id="editContactNote" class="form-input" placeholder="Note (optional)">
-			</div>
-			<button type="button" onclick="editContact();">Save</button>
-			<button type="button" onclick="closeEditModal();">Cancel</button>
-			<span id="contactEditResult"></span>
+			
 			<span id="contactDeleteResult"></span>
 		</div>
 	</div>
