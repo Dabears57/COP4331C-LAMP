@@ -3,6 +3,10 @@
 // Global variable to store the contacts data in an array 
 let contactsData = [];
 
+// Global variables to track sorting state
+let currentSortColumn = 'firstName';  // Default sort column
+let sortDirection = 'asc';            // Default sort direction (ascending)
+
 // Function to load the page and search for contacts. Called on initial page load 
 function loadPage() 
 {
@@ -275,8 +279,8 @@ function searchContacts()
                 // Store the results in the global contactsData array
                 contactsData = results;
                 
-                // Render the table with the fetched data
-                renderTable(contactsData);
+                // Apply default sort (firstName ascending)
+                sortBy(currentSortColumn);
                 
                 // Display success message with count
                 document.getElementById("contactSearchResult").innerHTML = contactsData.length + " contact(s) loaded";
@@ -374,21 +378,54 @@ function openEditModalById(contactId)
 }
 
 // Assisted by Cursor 
-// Function to sort the contacts data by First Name or Last Name
+// Function to sort the contacts data by First Name or Last Name with bidirectional sorting
 function sortBy(columnName)
 {
-    // Sort the contactsData array based on the column name
+    // Check if clicking the same column - toggle direction
+    if (currentSortColumn === columnName) {
+        sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+        // New column - default to ascending
+        currentSortColumn = columnName;
+        sortDirection = 'asc';
+    }
+    
+    // Sort the contactsData array based on the column name and direction
     contactsData.sort((a, b) => {
+        let comparison = 0;
+        
         if (columnName === "firstName") {
-            return a.firstName.localeCompare(b.firstName);
+            comparison = a.firstName.localeCompare(b.firstName);
         } else if (columnName === "lastName") {
-            return a.lastName.localeCompare(b.lastName);
+            comparison = a.lastName.localeCompare(b.lastName);
         }
-        // If the column name is not First Name or Last Name, return 0
-        return 0;
+        
+        // Reverse the comparison if descending
+        return sortDirection === 'asc' ? comparison : -comparison;
     });
+    
+    // Update visual indicators
+    updateSortIndicators(columnName, sortDirection);
+    
     // Render the table with the sorted data
     renderTable(contactsData);
+}
+
+// Function to update sort direction indicators in table headers
+function updateSortIndicators(columnName, direction)
+{
+    // Remove all existing indicators
+    document.querySelectorAll('.table thead th').forEach(th => {
+        th.classList.remove('sorted-asc', 'sorted-desc');
+    });
+    
+    // Add indicator to the sorted column
+    const headers = document.querySelectorAll('.table thead th');
+    if (columnName === 'firstName') {
+        headers[0].classList.add(direction === 'asc' ? 'sorted-asc' : 'sorted-desc');
+    } else if (columnName === 'lastName') {
+        headers[1].classList.add(direction === 'asc' ? 'sorted-asc' : 'sorted-desc');
+    }
 }
 // Function to delete a contact
 // Partially written by Cursor 

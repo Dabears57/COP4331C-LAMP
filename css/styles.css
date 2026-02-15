@@ -138,9 +138,6 @@ body
     background-color: var(--color-bg-dark);
     margin: 0;
     padding: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
 }
 
 /* Custom Scrollbar for Webkit browsers (Chrome, Safari, Edge) */
@@ -672,8 +669,7 @@ body > *:not(.top-bar) {
 
 .table-container {
     margin: 0 20px 20px 20px;          /* 20px margin on all sides for consistency */
-    flex: 1;                           /* Grow to fill available space */
-    min-height: 0;                     /* Allow flexbox to shrink properly */
+    max-height: 70vh;                  /* Maximum 70% of viewport height - responsive to all screens */
     overflow-y: auto;
     overflow-x: hidden;
     border-radius: 12px;
@@ -712,6 +708,41 @@ body > *:not(.top-bar) {
     color: var(--color-primary);
     border-bottom: 2px solid var(--color-primary-alpha-50);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+/* Sortable column headers (first two columns only) */
+.table thead th:nth-child(1),
+.table thead th:nth-child(2) {
+    cursor: pointer;
+    user-select: none;
+}
+
+.table thead th:nth-child(1):hover,
+.table thead th:nth-child(2):hover {
+    background-color: rgba(142, 97, 255, 0.1);
+}
+
+/* Sort indicators */
+.table thead th.sorted-asc::after,
+.table thead th.sorted-desc::after {
+    content: '';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+}
+
+.table thead th.sorted-asc::after {
+    border-bottom: 6px solid var(--color-primary);
+}
+
+.table thead th.sorted-desc::after {
+    border-top: 6px solid var(--color-primary);
 }
 
 /* Round the top corners of the header */
