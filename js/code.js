@@ -1,3 +1,5 @@
+// Very large portion of this file was written by Cursor.
+
 const urlBase = 'https://christianartigas.com/LAMPAPI';
 const extension = 'php';
 

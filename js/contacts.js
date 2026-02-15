@@ -1,3 +1,5 @@
+// Very large portion of this file was written by Cursor.
+
 // Global variable to store the contacts data in an array 
 let contactsData = [];
 
@@ -176,11 +178,20 @@ function addEnterKeyListenerToModal(elementId, saveFunction)
     const element = document.getElementById(elementId);
     if (!element) return;
     
+    // Remove any existing listener first to prevent duplicates
+    removeEnterKeyListenerFromModal(elementId);
+    
     // Store the handler so we can remove it later
     const handler = function(event) {
-        if (event.key === 'Enter') {
+        // Only trigger if Enter is pressed and not already processing
+        if (event.key === 'Enter' && !element._isProcessing) {
             event.preventDefault();
+            element._isProcessing = true;
             saveFunction();
+            // Reset processing flag after a short delay
+            setTimeout(() => {
+                element._isProcessing = false;
+            }, 500);
         }
     };
     
@@ -195,13 +206,18 @@ function addEnterKeyListenerToModal(elementId, saveFunction)
 function removeEnterKeyListenerFromModal(elementId)
 {
     const element = document.getElementById(elementId);
-    if (!element || !element._enterKeyHandler) return;
+    if (!element) return;
     
-    // Remove the listener
-    element.removeEventListener('keypress', element._enterKeyHandler);
+    // Remove the listener if it exists
+    if (element._enterKeyHandler) {
+        element.removeEventListener('keypress', element._enterKeyHandler);
+        delete element._enterKeyHandler;
+    }
     
-    // Clean up the stored handler
-    delete element._enterKeyHandler;
+    // Clean up the processing flag
+    if (element._isProcessing) {
+        delete element._isProcessing;
+    }
 }
 
 // Helper function to escape HTML and prevent XSS attacks (written by Cursor) 
