@@ -893,15 +893,75 @@ body > *:not(.top-bar) {
 }
 
 /* ============================================
+   MODAL HEADER (for title + delete button)
+   ============================================ */
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    position: relative;
+}
+
+/* ============================================
    MODAL TITLE
    ============================================ */
 
 .modal-content h2 {
-    margin: 0 0 24px 0;
+    margin: 0;
     font-family: var(--auth-title-font-family);
     font-size: 28px;
     color: var(--color-text-primary);
+    flex: 1;
+    text-align: left;
+}
+
+/* For Add Contact modal (no header wrapper) */
+.modal-content > h2 {
+    margin: 0 0 24px 0;
     text-align: center;
+}
+
+/* ============================================
+   MODAL DELETE BUTTON (top right corner)
+   ============================================ */
+
+.modal-delete-btn {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 50%;
+    background-color: transparent !important;
+    border: 2px solid var(--color-error) !important;
+    color: var(--color-error);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.modal-delete-btn:hover {
+    background-color: var(--color-error) !important;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(255, 68, 68, 0.4);
+}
+
+.modal-delete-btn:focus {
+    outline: 2px solid var(--color-error);
+    outline-offset: 2px;
+}
+
+.delete-icon {
+    user-select: none;
+    pointer-events: none;
+    font-size: 20px;
+    line-height: 1;
 }
 
 /* ============================================
@@ -973,34 +1033,24 @@ body > *:not(.top-bar) {
     transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
-/* Save button */
-.modal-content button:first-of-type {
+/* Save button (primary action) */
+.modal-content button:not(.modal-delete-btn):first-of-type {
     background: var(--color-primary);
     color: var(--color-text-primary);
 }
 
-.modal-content button:first-of-type:hover {
+.modal-content button:not(.modal-delete-btn):first-of-type:hover {
     background: var(--color-secondary);
     transform: translateY(-2px);
 }
 
-/* Delete button (in edit modal only) */
-#editContactModal .modal-content button:nth-of-type(2) {
-    background: var(--color-error);
-    color: white;
-}
-
-#editContactModal .modal-content button:nth-of-type(2):hover {
-    opacity: 0.85;
-}
-
-/* Cancel button */
-.modal-content button:last-of-type {
+/* Cancel button (secondary action) */
+.modal-content button:not(.modal-delete-btn):last-of-type {
     background: rgba(255, 255, 255, 0.08);
     color: var(--color-text-secondary);
 }
 
-.modal-content button:last-of-type:hover {
+.modal-content button:not(.modal-delete-btn):last-of-type:hover {
     background: rgba(255, 255, 255, 0.15);
 }
 
