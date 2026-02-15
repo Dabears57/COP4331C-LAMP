@@ -41,6 +41,9 @@ function openAddModal()
     document.getElementById("contactAddress").classList.remove("form-input--error");
     document.getElementById("contactCompany").classList.remove("form-input--error");
     document.getElementById("contactNote").classList.remove("form-input--error");
+    
+    // Add Enter key listener for add contact modal
+    addEnterKeyListenerToModal('addContactModal', addContact);
 }
 
 // Helper function to close the add contact modal
@@ -55,6 +58,9 @@ function closeAddModal()
     document.getElementById("contactCompany").value = "";
     document.getElementById("contactNote").value = "";
     document.getElementById("contactAddResult").innerHTML = "";
+    
+    // Remove Enter key listener when closing
+    removeEnterKeyListenerFromModal('addContactModal');
 }
 
 // Helper function to close the view/edit contact modal
@@ -106,6 +112,9 @@ function enterEditMode()
     
     // Hide edit button, keep delete button
     document.getElementById("editContactBtn").style.display = "none";
+    
+    // Add Enter key listener for edit mode
+    addEnterKeyListenerToModal('editModeContent', saveContact);
 }
 
 // Function to exit edit mode (return to view mode)
@@ -125,6 +134,9 @@ function exitEditMode()
     
     // Clear any error messages
     document.getElementById("contactEditResult").innerHTML = "";
+    
+    // Remove Enter key listener when exiting edit mode
+    removeEnterKeyListenerFromModal('editModeContent');
 }
 
 // Function to cancel edit and return to view mode
@@ -156,6 +168,40 @@ function saveContact()
 {
     // Call the existing editContact function
     editContact();
+}
+
+// Helper function to add Enter key listener to a modal
+function addEnterKeyListenerToModal(elementId, saveFunction)
+{
+    const element = document.getElementById(elementId);
+    if (!element) return;
+    
+    // Store the handler so we can remove it later
+    const handler = function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            saveFunction();
+        }
+    };
+    
+    // Store the handler on the element for later removal
+    element._enterKeyHandler = handler;
+    
+    // Add the listener
+    element.addEventListener('keypress', handler);
+}
+
+// Helper function to remove Enter key listener from a modal
+function removeEnterKeyListenerFromModal(elementId)
+{
+    const element = document.getElementById(elementId);
+    if (!element || !element._enterKeyHandler) return;
+    
+    // Remove the listener
+    element.removeEventListener('keypress', element._enterKeyHandler);
+    
+    // Clean up the stored handler
+    delete element._enterKeyHandler;
 }
 
 // Helper function to escape HTML and prevent XSS attacks (written by Cursor) 
