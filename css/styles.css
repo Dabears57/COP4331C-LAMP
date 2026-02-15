@@ -668,12 +668,11 @@ body > *:not(.top-bar) {
    ============================================ */
 
 .table-container {
-    max-height: 500px; /* adjust as needed */
+    max-height: 500px;  /* adjust as needed */
     max-width: 1200px;  /* maximum width for the table */
     margin: 0 auto;     /* center the table horizontally */
-    padding: 0 40px;    /* space on left and right sides */
+    padding: 0 10px;    /* small space on left and right sides */
     overflow-y: auto;
-    border-radius: 12px;
 }
 
 /* ============================================
@@ -686,6 +685,8 @@ body > *:not(.top-bar) {
     border-spacing: 0;
     background-color: var(--color-bg-medium);
     font-family: 'Montserrat', sans-serif;
+    border-radius: 12px;
+    overflow: hidden;
 }
 
 /* ============================================
@@ -704,6 +705,15 @@ body > *:not(.top-bar) {
     letter-spacing: 1px;
     color: var(--color-primary);
     border-bottom: 2px solid var(--color-primary-alpha-50);
+}
+
+/* Round the top corners of the header */
+.table thead th:first-child {
+    border-top-left-radius: 12px;
+}
+
+.table thead th:last-child {
+    border-top-right-radius: 12px;
 }
 
 /* ============================================
