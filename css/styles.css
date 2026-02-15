@@ -909,16 +909,20 @@ body > *:not(.top-bar) {
    ============================================ */
 
 .modal-content .form-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
     margin-bottom: 20px;
 }
 
 .modal-content .form-label {
-    display: block;
+    flex-shrink: 0;
+    width: 130px;
+    text-align: right;
     color: var(--label-color);
     font-family: 'Montserrat', sans-serif;
     font-size: var(--label-font-size);
     font-weight: var(--label-font-weight);
-    margin-bottom: 8px;
     letter-spacing: 0.5px;
 }
 
