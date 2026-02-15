@@ -668,7 +668,7 @@ body > *:not(.top-bar) {
    ============================================ */
 
 .table-container {
-    max-height: 600px;                 /* Maximum height before scrolling - adjust as needed */
+    height: calc(100vh - 220px);       /* Fill viewport minus space for header/controls/margins */
     margin: 0 20px 20px 20px;          /* 20px margin on all sides for consistency */
     overflow-y: auto;
     overflow-x: hidden;
