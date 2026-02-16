@@ -193,6 +193,15 @@ body
     transform: translateY(var(--topbar-primary-vertical-offset));
 }
 
+/* Logo styling - replaces AFC text */
+.top-bar__logo {
+    height: 50px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+    transform: translateY(var(--topbar-primary-vertical-offset));
+}
+
 .top-bar__text--secondary {
     font-family: var(--topbar-secondary-font-family);
     font-size: var(--topbar-secondary-font-size);
@@ -1589,6 +1598,11 @@ select {
     
     .top-bar__text--primary {
         font-size: 36px;
+    }
+    
+    /* Scale logo down for mobile */
+    .top-bar__logo {
+        height: 36px;
     }
     
     .top-bar__text--secondary {
