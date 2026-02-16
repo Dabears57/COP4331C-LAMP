@@ -498,7 +498,7 @@ body > *:not(.top-bar) {
    ACCESS UI DIV - MAIN CONTENT CONTAINER
    =============================== */
 #accessUIDiv {
-    padding-top: 0.5rem;         /* minimal gap below the fixed top bar */
+    padding-top: 0.2rem;         /* minimal gap below the fixed top bar */
 }
 
 /* ===============================
@@ -511,7 +511,7 @@ body > *:not(.top-bar) {
     font-size: 16px;
     font-weight: 500;
     color: var(--color-text-secondary);
-    margin: 0.25rem 0;
+    margin: 10px 0;
 }
 
 /* ===============================
@@ -668,7 +668,7 @@ body > *:not(.top-bar) {
    ============================================ */
 
 .table-container {
-    margin: 0 20px 20px 20px;          /* 20px margin on all sides for consistency */
+    margin: 0 20px 20px 20px;          /* 20px side/bottom margin, no negative offsets */
     max-height: 70vh;                  /* Maximum 70% of viewport height - responsive to all screens */
     overflow-y: auto;
     overflow-x: hidden;
