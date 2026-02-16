@@ -649,8 +649,8 @@ body > *:not(.top-bar) {
 @media (max-width: 600px) {
     /* Make search input text smaller so placeholder fits without being cut off */
     .search-container input[type="text"] {
-        padding: 10px 12px;
-        font-size: 12px;
+        padding: 10px 10px;
+        font-size: 11px;
         min-width: 150px; /* Reduce min-width on mobile */
     }
     
