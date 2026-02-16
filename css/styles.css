@@ -1361,7 +1361,7 @@ select {
 /* ========== ABOUT PAGE ========== */
 .about-back-btn {
     position: absolute;
-    top: calc(var(--topbar-height) + 30px);  /* Position below top bar + 30px spacing */
+    top: 30px;        /* Original desktop position - looks good */
     left: 30px;
     z-index: 50;
     padding: 10px 20px;
@@ -1371,7 +1371,6 @@ select {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    margin-top: 0;  /* Override the global body > * rule */
 }
 
 .back-arrow {
@@ -1462,9 +1461,9 @@ select {
     }
     
     /* 3. About page mobile adjustments */
-    /* Add extra top padding to auth-container to prevent back button overlap */
+    /* Push content down to make room for back button - button stays in place */
     .auth-container {
-        padding-top: 80px;  /* Make room for back button (70px topbar + button height + spacing) */
+        padding-top: 100px;  /* Extra padding to push content below the back button */
         align-items: flex-start;  /* Align to top instead of center on mobile */
     }
     
@@ -1473,9 +1472,9 @@ select {
         padding: 20px;
     }
     
+    /* Back button stays in same position, just make it smaller on mobile */
     .about-back-btn {
         left: 10px;
-        top: calc(var(--topbar-height) + 10px);  /* Position below top bar + 10px spacing on mobile */
         padding: 8px 16px;
         font-size: 13px;
     }
