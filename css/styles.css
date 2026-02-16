@@ -498,7 +498,7 @@ body > *:not(.top-bar) {
    ACCESS UI DIV - MAIN CONTENT CONTAINER
    =============================== */
 #accessUIDiv {
-    padding-top: 1rem;           /* creates gap below the fixed top bar */
+    padding-top: 0.5rem;         /* minimal gap below the fixed top bar */
 }
 
 /* ===============================
@@ -511,7 +511,7 @@ body > *:not(.top-bar) {
     font-size: 16px;
     font-weight: 500;
     color: var(--color-text-secondary);
-    margin: 0.5rem 0;
+    margin: 0.25rem 0;
 }
 
 /* ===============================
@@ -523,7 +523,7 @@ body > *:not(.top-bar) {
     align-items: center;         /* center vertically */
     justify-content: center;     /* center horizontally */
     gap: 16px;                   /* spacing between search and add button */
-    margin: 0 0 0.75rem 0;       /* reduced bottom margin */
+    margin: 0 0 0.5rem 0;        /* minimal bottom margin */
 }
 
 /* ===============================
