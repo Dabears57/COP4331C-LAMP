@@ -655,6 +655,11 @@ body > *:not(.top-bar) {
     
     .search-container input {
         padding: 10px 14px;
+        font-size: 12px; /* Smaller text so "Search Contacts" placeholder fits */
+    }
+    
+    .search-container input::placeholder {
+        font-size: 12px; /* Ensure placeholder text is also smaller */
     }
     
     /* Hide Phone Number and Email columns on mobile - show only First Name and Last Name */
