@@ -498,7 +498,7 @@ body > *:not(.top-bar) {
    ACCESS UI DIV - MAIN CONTENT CONTAINER
    =============================== */
 #accessUIDiv {
-    padding-top: 0.2rem;         /* minimal gap below the fixed top bar */
+    padding-top: 25px;         /* minimal gap below the fixed top bar */
 }
 
 /* ===============================
