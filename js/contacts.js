@@ -293,8 +293,8 @@ function searchContacts()
 	// If there is an error, display the error message
 	catch(err)
 	{
-		// Display the error message
-		document.getElementById("contactSearchResult").innerHTML = err.message;
+		// Display the error message (textContent prevents XSS)
+		document.getElementById("contactSearchResult").textContent = err.message;
 	}
 }
 
@@ -316,7 +316,7 @@ function renderTable(data)
     {
         // Build the row with escaped HTML to prevent XSS
         // Make the entire row clickable to open edit modal
-        contactList += "<tr onclick=\"openEditModalById('" + data[i].contactId + "')\" style=\"cursor: pointer;\">";
+        contactList += "<tr onclick=\"openEditModalById('" + data[i].contactId + "')\">";
         contactList += "<td>" + escapeHtml(data[i].firstName) + "</td>";
         contactList += "<td>" + escapeHtml(data[i].lastName) + "</td>";
         contactList += "<td>" + escapeHtml(data[i].phone) + "</td>";
@@ -464,8 +464,8 @@ function deleteContact(contactID)
     }
     catch(err)
     {
-        // Display the error message
-        document.getElementById("contactDeleteResult").innerHTML = err.message;
+        // Display the error message (textContent prevents XSS)
+        document.getElementById("contactDeleteResult").textContent = err.message;
     }
 }
 
@@ -604,8 +604,8 @@ function addContact()
     }
     catch(err)
     {
-        // Display the error message
-        document.getElementById("contactAddResult").innerHTML = err.message;
+        // Display the error message (textContent prevents XSS)
+        document.getElementById("contactAddResult").textContent = err.message;
     }
 }
 
@@ -757,8 +757,8 @@ function editContact()
     }
     catch(err)
     {
-        // Display the error message
-        document.getElementById("contactEditResult").innerHTML = err.message;
+        // Display the error message (textContent prevents XSS)
+        document.getElementById("contactEditResult").textContent = err.message;
     }
 }
 

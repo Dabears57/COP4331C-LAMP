@@ -275,7 +275,9 @@ function doSignup()
 				// If there is an error, display the error message
 				else
 				{
-					document.getElementById("signupResult").innerHTML = jsonObject.error;
+					// Create a text node to safely display error message (prevents XSS)
+					const resultElement = document.getElementById("signupResult");
+					resultElement.textContent = jsonObject.error;
 				}
 			}
 		};

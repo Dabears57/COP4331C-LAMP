@@ -786,12 +786,15 @@ body > *:not(.top-bar) {
 }
 
 /* ============================================
-   ROW HOVER
+   ROW HOVER & CLICKABLE ROWS
    ============================================ */
+
+.table tbody tr {
+    cursor: pointer;
+}
 
 .table tbody tr:hover {
     background-color: var(--color-primary-alpha-10);
-    cursor: pointer;
 }
 
 /* Remove last row border */
