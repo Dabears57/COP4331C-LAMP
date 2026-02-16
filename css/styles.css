@@ -1464,6 +1464,7 @@ select {
     .about-card {
         max-width: 100%;
         padding: 20px;
+        padding-top: 60px;  /* Extra top padding to clear the back button */
     }
     
     .about-back-btn {
