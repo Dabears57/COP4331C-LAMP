@@ -195,7 +195,7 @@ body
 
 /* Logo styling - replaces AFC text */
 .top-bar__logo {
-    height: 50px;
+    height: 100px;
     width: auto;
     display: block;
     object-fit: contain;
@@ -1602,7 +1602,7 @@ select {
     
     /* Scale logo down for mobile */
     .top-bar__logo {
-        height: 36px;
+        height: 42px;
     }
     
     .top-bar__text--secondary {
