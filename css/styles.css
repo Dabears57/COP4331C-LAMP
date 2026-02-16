@@ -647,10 +647,16 @@ body > *:not(.top-bar) {
 }
 
 @media (max-width: 600px) {
+    /* Override legacy #searchText ID selector for mobile */
+    #searchText {
+        font-size: 10px !important; /* Need !important to override ID selector specificity */
+        padding: 10px 8px !important;
+    }
+    
     /* Make search input text smaller so placeholder fits without being cut off */
     .search-container input[type="text"] {
         padding: 10px 8px;
-        font-size: 9px;
+        font-size: 10px;
         min-width: 120px; /* Reduce min-width on mobile */
     }
     
