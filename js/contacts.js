@@ -279,8 +279,9 @@ function searchContacts()
                 // Store the results in the global contactsData array
                 contactsData = results;
                 
-                // Apply default sort (firstName ascending)
-                sortBy(currentSortColumn);
+                // Reset sort state to ensure proper default (firstName ascending)
+                currentSortColumn = '';  // Reset so sortBy treats it as a new column
+                sortBy('firstName');
                 
                 // Display success message with count
                 document.getElementById("contactSearchResult").innerHTML = contactsData.length + " contact(s) loaded";
