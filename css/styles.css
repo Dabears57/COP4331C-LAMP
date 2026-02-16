@@ -1602,7 +1602,7 @@ select {
     
     /* Scale logo down for mobile */
     .top-bar__logo {
-        height: 42px;
+        height: 60px;
     }
     
     .top-bar__text--secondary {
