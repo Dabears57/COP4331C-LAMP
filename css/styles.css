@@ -498,7 +498,7 @@ body > *:not(.top-bar) {
    ACCESS UI DIV - MAIN CONTENT CONTAINER
    =============================== */
 #accessUIDiv {
-    padding-top: 25px;         /* minimal gap below the fixed top bar */
+    padding-top: 20px;         /* minimal gap below the fixed top bar */
 }
 
 /* ===============================
@@ -668,7 +668,10 @@ body > *:not(.top-bar) {
    ============================================ */
 
 .table-container {
-    margin: 0 20px 20px 20px;          /* 20px side/bottom margin, no negative offsets */
+    margin-top: 45px;                  /* Override global body > * rule - reduced from 70px */
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
     max-height: 70vh;                  /* Maximum 70% of viewport height - responsive to all screens */
     overflow-y: auto;
     overflow-x: hidden;
