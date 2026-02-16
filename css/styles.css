@@ -647,19 +647,18 @@ body > *:not(.top-bar) {
 }
 
 @media (max-width: 600px) {
-    .search-container input,
-    .search-container button,
-    .add-button {
+    /* Make search input text smaller so placeholder fits without being cut off */
+    .search-container input {
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+    
+    .search-container button {
         font-size: 14px;
     }
     
-    .search-container input {
-        padding: 10px 14px;
-        font-size: 12px; /* Smaller text so "Search Contacts" placeholder fits */
-    }
-    
-    .search-container input::placeholder {
-        font-size: 12px; /* Ensure placeholder text is also smaller */
+    .add-button {
+        font-size: 14px;
     }
     
     /* Hide Phone Number and Email columns on mobile - show only First Name and Last Name */
